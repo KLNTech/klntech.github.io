@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:88px}
+body{margin:0;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+@keyframes klnReveal{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+@keyframes klnFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+@keyframes klnGraphIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+@keyframes klnPulseNode{0%,100%{transform:scale(1)}50%{transform:scale(1.14)}}
+@keyframes klnDrift{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes klnDash{to{stroke-dashoffset:-32}}
+@keyframes klnRipple{from{r:6px;opacity:.8}to{r:150px;opacity:0}}
+@keyframes klnCardIn{from{opacity:0;transform:translateY(6px) scale(.95)}to{opacity:1;transform:none}}
+@keyframes klnTicker{to{transform:translateX(-50%)}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}}
+</style>
+</helmet>
+<div id="top" style="{{rootStyle}} min-height:100vh;background-color:{{pageBg}};color:var(--ink,#F4ECDD);font-family:'Inter',system-ui,-apple-system,sans-serif;line-height:1.6;position:relative;overflow-x:hidden">
+
+  <div id="klntech-glow" style="position:fixed;top:0;left:0;width:520px;height:520px;margin:-260px 0 0 -260px;border-radius:50%;background:radial-gradient(circle, color-mix(in srgb, var(--accent,#D89548) 22%, transparent) 0%, transparent 62%);pointer-events:none;z-index:1;filter:blur(26px);opacity:.55"></div>
+
+  <nav style="position:sticky;top:0;z-index:50;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);background:color-mix(in srgb, var(--bg-page,#14110E) 76%, transparent);border-bottom:1px solid var(--hairline,rgba(244,236,221,.12))">
+    <div style="max-width:1200px;margin:0 auto;padding:0 28px;height:68px;display:flex;align-items:center;gap:24px">
+      <a href="#top" style="font-family:'Fraunces',serif;font-weight:600;font-size:21px;letter-spacing:.01em;color:var(--ink);text-decoration:none"><span style="color:var(--accent,#D89548)">K</span>LNTech</a>
+      <div style="display:flex;gap:24px;margin-left:auto;font-size:14px">
+        <a href="#about" style="color:var(--ink-2,#C7BBA6);text-decoration:none;transition:color .2s" style-hover="color:var(--ink,#F4ECDD)">{{navStudio}}</a>
+        <a href="#projects" style="color:var(--ink-2,#C7BBA6);text-decoration:none;transition:color .2s" style-hover="color:var(--ink,#F4ECDD)">{{navWork}}</a>
+        <a href="#graph" style="color:var(--ink-2,#C7BBA6);text-decoration:none;transition:color .2s" style-hover="color:var(--ink,#F4ECDD)">{{navGraph}}</a>
+        <a href="#collab" style="color:var(--ink-2,#C7BBA6);text-decoration:none;transition:color .2s" style-hover="color:var(--ink,#F4ECDD)">{{navCollab}}</a>
+        <a href="#contact" style="color:var(--ink-2,#C7BBA6);text-decoration:none;transition:color .2s" style-hover="color:var(--ink,#F4ECDD)">{{navContact}}</a>
+        <a href="Lab.dc.html" style="color:var(--accent-soft,#ECB87D);text-decoration:none;transition:color .2s;font-family:'JetBrains Mono',monospace;font-size:13px" style-hover="color:var(--accent,#D89548)">/lab</a>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button onClick="{{toggleDir}}" title="{{dirTitle}}" style="border:1px solid var(--hairline,rgba(244,236,221,.12));background:transparent;color:var(--ink-2,#C7BBA6);border-radius:999px;padding:8px 14px;font-size:12px;font-family:'JetBrains Mono',monospace;letter-spacing:.04em;cursor:pointer;transition:all .2s;white-space:nowrap" style-hover="border-color:var(--accent,#D89548);color:var(--ink,#F4ECDD)">{{dirBtn}}</button>
+        <button onClick="{{toggleLang}}" style="border:1px solid var(--hairline,rgba(244,236,221,.12));background:transparent;color:var(--ink-2,#C7BBA6);border-radius:999px;padding:8px 13px;font-size:13px;font-family:inherit;cursor:pointer;transition:all .2s" style-hover="border-color:var(--accent,#D89548);color:var(--ink,#F4ECDD)">{{langBtn}}</button>
+        <button onClick="{{toggleTheme}}" aria-label="theme" style="border:1px solid var(--hairline,rgba(244,236,221,.12));background:transparent;color:var(--ink-2,#C7BBA6);border-radius:999px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s" style-hover="border-color:var(--accent,#D89548);color:var(--ink,#F4ECDD)">
+          <sc-if value="{{isDark}}" hint-placeholder-val="{{ true }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"></path></svg></sc-if>
+          <sc-if value="{{isLight}}" hint-placeholder-val="{{ false }}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"></path></svg></sc-if>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <header data-screen-label="Hero" style="position:relative;padding:120px 28px 72px;max-width:1200px;margin:0 auto;overflow:hidden">
+    <canvas id="kln-net" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;opacity:{{ambientOpacity2}};pointer-events:none"></canvas>
+    <div style="position:relative;z-index:2;max-width:880px;{{heroAlign}}">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-soft,#ECB87D)">{{heroEyebrow}}</div>
+      <h1 style="font-family:'Fraunces',serif;font-weight:600;line-height:1.03;font-size:clamp(2.8rem,1.5rem+4.6vw,5.2rem);margin:18px 0 0;letter-spacing:-.015em">{{heroTitle}}</h1>
+      <p style="font-size:clamp(1.06rem,.98rem+.45vw,1.34rem);max-width:52ch;color:var(--ink-2,#C7BBA6);margin:24px 0 32px;{{heroPMargin}}">{{heroSub}}</p>
+      <div style="display:flex;gap:13px;flex-wrap:wrap;{{heroRow}}">
+        <a href="#projects" data-magnetic style="background:var(--accent,#D89548);color:#1A1206;border:none;font-weight:600;border-radius:999px;padding:14px 26px;font-size:15px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:transform .25s cubic-bezier(.2,1,.3,1),box-shadow .2s;box-shadow:0 8px 30px color-mix(in srgb,var(--accent,#D89548) 26%, transparent)" style-hover="transform:translateY(-2px) scale(1.02);box-shadow:0 12px 40px color-mix(in srgb,var(--accent,#D89548) 38%, transparent)">{{ctaWork}} <span style="font-size:17px">→</span></a>
+        <a href="#graph" data-magnetic style="background:transparent;color:var(--ink,#F4ECDD);border:1px solid var(--hairline,rgba(244,236,221,.12));border-radius:999px;padding:14px 26px;font-size:15px;text-decoration:none;transition:transform .25s cubic-bezier(.2,1,.3,1),border-color .2s" style-hover="border-color:var(--accent,#D89548)">{{ctaGraph}}</a>
+      </div>
+    </div>
+  </header>
+
+  <section id="stats" style="max-width:1200px;margin:0 auto;padding:14px 28px 60px">
+    <div style="display:flex;flex-wrap:wrap;gap:16px">
+      <sc-for list="{{stats}}" as="s" hint-placeholder-count="4">
+        <div style="flex:1;min-width:160px;border:1px solid var(--hairline,rgba(244,236,221,.12));background:var(--glass,rgba(30,26,22,.5));backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:22px 24px">
+          <div class="klnCount" data-count="{{s.n}}" style="font-family:'Fraunces',serif;font-weight:600;font-size:clamp(2.1rem,1.4rem+2vw,3.1rem);color:var(--accent,#D89548);line-height:1">{{s.n}}</div>
+          <div style="font-size:13.5px;color:var(--ink-2,#C7BBA6);margin-top:8px">{{s.label}}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section id="about" data-screen-label="Studio" style="max-width:1200px;margin:0 auto;padding:52px 28px">
+    <div style="max-width:64ch;margin-bottom:34px;animation:klnReveal .8s both;animation-timeline:view();animation-range:entry 0% cover 22%">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-soft,#ECB87D)">{{aboutEyebrow}}</div>
+      <h2 style="font-family:'Fraunces',serif;font-weight:600;font-size:clamp(1.8rem,1.3rem+1.7vw,2.7rem);margin:12px 0 10px;line-height:1.1">{{aboutTitle}}</h2>
+      <p style="color:var(--ink-2,#C7BBA6);margin:0;font-size:1.06rem">{{aboutBody}}</p>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:14px">
+      <div data-tilt3d style="position:relative;flex:1;min-width:188px;border:1px solid var(--hairline,rgba(244,236,221,.12));background:var(--glass,rgba(30,26,22,.5));backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:22px;transition:transform .25s ease,border-color .3s;transform-style:preserve-3d" style-hover="border-color:var(--accent,#D89548)"><div data-glare style="position:absolute;inset:0;border-radius:16px;pointer-events:none"></div>
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--accent,#D89548)" stroke-width="1.7"><rect x="6" y="2" width="12" height="20" rx="3"></rect><path d="M11 18h2"></path></svg>
+        <h3 style="font-size:1.02rem;margin:14px 0 6px;font-weight:600">{{cap0t}}</h3><p style="margin:0;font-size:.9rem;color:var(--ink-2,#C7BBA6);font-family:'JetBrains Mono',monospace">{{cap0d}}</p>
+      </div>
+      <div data-tilt3d style="position:relative;flex:1;min-width:188px;border:1px solid var(--hairline,rgba(244,236,221,.12));background:var(--glass,rgba(30,26,22,.5));backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:22px;transition:transform .25s ease,border-color .3s;transform-style:preserve-3d" style-hover="border-color:var(--accent,#D89548)"><div data-glare style="position:absolute;inset:0;border-radius:16px;pointer-events:none"></div>
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--accent,#D89548)" stroke-width="1.7" stroke-linejoin="round"><path d="M12 2 21 7v10l-9 5-9-5V7z"></path><path d="m3.3 7 8.7 5 8.7-5M12 12v10"></path></svg>
+        <h3 style="font-size:1.02rem;margin:14px 0 6px;font-weight:600">{{cap1t}}</h3><p style="margin:0;font-size:.9rem;color:var(--ink-2,#C7BBA6);font-family:'JetBrains Mono',monospace">{{cap1d}}</p>
+      </div>
+      <div data-tilt3d style="position:relative;flex:1;min-width:188px;border:1px solid var(--hairline,rgba(244,236,221,.12));background:var(--glass,rgba(30,26,22,.5));backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:22px;transition:transform .25s ease,border-color .3s;transform-style:preserve-3d" style-hover="border-color:var(--accent,#D89548)"><div data-glare style="position:absolute;inset:0;border-radius:16px;pointer-events:none"></div>
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--accent,#D89548)" stroke-width="1.7"><rect x="3" y="4" width="18" height="6" rx="2"></rect><rect x="3" y="14" width="18" height="6" rx="2"></rect><path d="M7 7h.01M7 17h.01"></path></svg>
+        <h3 style="font-size:1.02rem;margin:14px 0 6px;font-weight:600">{{cap2t}}</h3><p style="margin:0;font-size:.9rem;color:var(--ink-2,#C7BBA6);font-family:'JetBrains Mono',monospace">{{cap2d}}</p>
+      </div>
+      <div data-tilt3d style="position:relative;flex:1;min-width:188px;border:1px solid var(--hairline,rgba(244,236,221,.12));background:var(--glass,rgba(30,26,22,.5));backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:22px;transition:transform .25s ease,border-color .3s;transform-style:preserve-3d" style-hover="border-color:var(--accent,#D89548)"><div data-glare style="position:absolute;inset:0;border-radius:16px;pointer-events:none"></div>
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--accent,#D89548)" stroke-width="1.7"><circle cx="13.5" cy="6.5" r="2.5"></circle><circle cx="17.5" cy="12.5" r="2.5"></circle><circle cx="8.5" cy="7.5" r="2.5"></circle><circle cx="6.5" cy="13.5" r="2.5"></circle><path d="M12 22a10 10 0 1 1 0-20c4 0 6 2 6 4.5 0 4-6 2-6 6 0 2 2 2 2 4 0 3-2 5.5-2 5.5z"></path></svg>
+        <h3 style="font-size:1.02rem;margin:14px 0 6px;font-weight:600">{{cap3t}}</h3><p style="margin:0;font-size:.9rem;color:var(--ink-2,#C7BBA6);font-family:'JetBrains Mono',monospace">{{cap3d}}</p>
+      </div>
+      <div data-tilt3d style="position:relative;flex:1;min-width:188px;border:1px solid var(--hairline,rgba(244,236,221,.12));background:var(--glass,rgba(30,26,22,.5));backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:22px;transition:transform .25s ease,border-color .3s;transform-style:preserve-3d" style-hover="border-color:var(--accent,#D89548)"><div data-glare style="position:absolute;inset:0;border-radius:16px;pointer-events:none"></div>
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--accent,#D89548)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11 3 3 8-8"></path><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"></path></svg>
+        <h3 style="font-size:1.02rem;margin:14px 0 6px;font-weight:600">{{cap4t}}</h3><p style="margin:0;font-size:.9rem;color:var(--ink-2,#C7BBA6);font-family:'JetBrains Mono',monospace">{{cap4d}}</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" data-screen-label="Projekty" style="max-width:1200px;margin:0 auto;padding:52px 28px">
+    <div style="margin-bottom:34px">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-soft,#ECB87D)">{{projEyebrow}}</div>
+      <h2 style="font-family:'Fraunces',serif;font-weight:600;font-size:clamp(1.8rem,1.3rem+1.7vw,2.7rem);margin:12px 0 0;line-height:1.1">{{projTitle}}</h2>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;gap:30px;align-items:stretch;margin-bottom:38px">
+      <div style="flex:1;min-width:300px;display:flex;flex-direction:column;justify-content:center">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--makeit,#D89548)">{{projMibTag}}</div>
+        <h3 style="font-family:'Fraunces',serif;font-weight:600;font-size:2.2rem;margin:8px 0 12px">MakeItBakeIt</h3>
+        <p style="color:var(--ink-2,#C7BBA6);font-size:1rem;margin:0 0 18px">{{projMibDesc}}</p>
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:16px">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-3,#8A7E6C)">{{themesLabel}}</span>
+          <span style="width:22px;height:22px;border-radius:50%;background:#F4C8A8;border:1px solid var(--hairline,rgba(244,236,221,.12))"></span>
+          <span style="width:22px;height:22px;border-radius:50%;background:#8AAE56;border:1px solid var(--hairline,rgba(244,236,221,.12))"></span>
+          <span style="width:22px;height:22px;border-radius:50%;background:#CC5570;border:1px solid var(--hairline,rgba(244,236,221,.12))"></span>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:7px">
+          <sc-for list="{{mibPills}}" as="p" hint-placeholder-count="4"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-2,#C7BBA6);border:1px solid var(--hairline,rgba(244,236,221,.12));border-radius:999px;padding:4px 11px">{{p}}</span></sc-for>
+        </div>
+        <a href="MakeItBakeIt.dc.html" style="display:inline-flex;align-items:center;gap:8px;align-self:flex-start;margin-top:22px;color:var(--accent,#D89548);border:1px solid var(--hairline,rgba(244,236,221,.12));border-radius:999px;padding:11px 20px;font-size:14px;font-weight:600;text-decoration:none;transition:all .2s" style-hover="border-color:var(--accent,#D89548);transform:translateX(3px)">{{caseStudyCta}} <span style="font-size:16px">→</span></a>
+      </div>
+      <div style="flex:1.45;min-width:380px;border:1px solid var(--hairline,rgba(244,236,221,.12));border-radius:18px;overflow:hidden;background:#0F0C0A">
+        <div style="height:40px;display:flex;align-items:center;gap:7px;padding:0 15px;border-bottom:1px solid rgba(244,236,221,.1);background:#171310">
+          <span style="width:11px;height:11px;border-radius:50%;background:#E5564B"></span><span style="width:11px;height:11px;border-radius:50%;background:#E5A84B"></span><span style="width:11px;height:11px;border-radius:50%;background:#5BB85B"></span>
+          <span style="margin-left:10px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#8A7E6C">{{demoMibLabel}}</span>
+        </div>
+        <iframe src="demos/makeitbakeit-design.html" loading="lazy" title="MakeItBakeIt design" style="width:100%;height:480px;border:0;display:block;background:#14110E"></iframe>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap-reverse;gap:30px;align-items:stretch">
+      <div style="flex:1.45;min-width:380px;border:1px solid var(--hairline,rgba(244,236,221,.12));border-radius:18px;overflow:hidden;background:#0F0C0A">
+        <div style="height:40px;display:flex;align-items:center;gap:7px;padding:0 15px;border-bottom:1px solid rgba(244,236,221,.1);background:#171310">
+          <span style="width:11px;height:11px;border-radius:50%;background:#E5564B"></span><span style="width:11px;height:11px;border-radius:50%;background:#E5A84B"></span><span style="width:11px;height:11px;border-radius:50%;background:#5BB85B"></span>
+          <span style="margin-left:10px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#8A7E6C">{{demoPlatLabel}}</span>
+        </div>
+        <iframe src="demos/platana-prototype.html" loading="lazy" title="Platana prototype" style="width:100%;height:480px;border:0;display:block;background:#14110E"></iframe>
+      </div>
+      <div style="flex:1;min-width:300px;display:flex;flex-direction:column;justify-content:center">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--platana,#5B8C5A)">{{projPlatTag}}</div>
+        <h3 style="font-family:'Fraunces',serif;font-weight:600;font-size:2.2rem;margin:8px 0 12px">Platana</h3>
+        <p style="color:var(--ink-2,#C7BBA6);font-size:1rem;margin:0 0 18px">{{projPlatDesc}}</p>
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:16px">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-3,#8A7E6C)">{{themesLabel}}</span>
+          <span style="width:22px;height:22px;border-radius:50%;background:#274D32;border:1px solid var(--hairline,rgba(244,236,221,.12))"></span>
+          <span style="width:22px;height:22px;border-radius:50%;background:#0E2A24;border:1px solid var(--hairline,rgba(244,236,221,.12))"></span>
+          <span style="width:22px;height:22px;border-radius:50%;background:#9C5B2E;border:1px solid var(--hairline,rgba(244,236,221,.12))"></span>
+          <span style="width:22px;height:22px;border-radius:50%;background:#4E7FA8;border:1px solid var(--hairline,rgba(244,236,221,.12))"></span>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:7px">
+          <sc-for list="{{platPills}}" as="p" hint-placeholder-count="4"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-2,#C7BBA6);border:1px solid var(--hairline,rgba(244,236,221,.12));border-radius:999px;padding:4px 11px">{{p}}</span></sc-for>
+        </div>
+        <a href="Platana.dc.html" style="display:inline-flex;align-items:center;gap:8px;align-self:flex-start;margin-top:22px;color:var(--platana,#5B8C5A);border:1px solid var(--hairline,rgba(244,236,221,.12));border-radius:999px;padding:11px 20px;font-size:14px;font-weight:600;text-decoration:none;transition:all .2s" style-hover="border-color:var(--platana,#5B8C5A);transform:translateX(3px)">{{caseStudyCta}} <span style="font-size:16px">→</span></a>
+      </div>
+    </div>
+
+    <div style="margin-top:24px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink-3,#8A7E6C)">{{labLabel}}</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-2,#C7BBA6);border:1px solid var(--hairline,rgba(244,236,221,.12));border-radius:999px;padding:4px 11px">LinguaNotes</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-2,#C7BBA6);border:1px solid var(--hairline,rgba(244,236,221,.12));border-radius:999px;padding:4px 11px">LensThatGame</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-2,#C7BBA6);border:1px solid var(--hairline,rgba(244,236,221,.12));border-radius:999px;padding:4px 11px">Unpluq*</span>
+    </div>
+  </section>
+
+  <section id="graph" data-screen-label="Graf skilli" style="background:#100D0B;border-top:1px solid var(--hairline,rgba(244,236,221,.12));border-bottom:1px solid var(--hairline,rgba(244,236,221,.12))">
+    <div style="max-width:1200px;margin:0 auto;padding:62px 28px">
+      <div style="margin-bottom:24px;max-width:66ch">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-soft,#ECB87D)">{{graphEyebrow}}</div>
+        <h2 style="font-family:'Fraunces',serif;font-weight:600;font-size:clamp(1.8rem,1.3rem+1.7vw,2.7rem);margin:12px 0 8px;line-height:1.1;color:#F4ECDD">{{graphTitle}}</h2>
+        <p style="color:#C7BBA6;margin:0;font-size:1.04rem">{{graphSub}} <span style="color:var(--accent-soft,#ECB87D)">{{graphHint}}</span></p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <div style="width:100%;border:1px solid rgba(244,236,221,.12);border-radius:18px;background:radial-gradient(130% 130% at 35% 15%, #1b1712 0%, #0E0B09 72%);overflow:hidden;animation:klnGraphIn .9s ease both, klnDrift 12s ease-in-out 1s infinite">
+          <svg id="klnGraphSvg" viewBox="0 0 1180 800" role="img" aria-label="{{graphTitle}}" style="width:100%;height:auto;display:block;touch-action:none" onMouseLeave="{{clearHover}}">
+            <defs><radialGradient id="klnBg" cx="38%" cy="18%" r="95%"><stop offset="0%" stop-color="#1d1813"></stop><stop offset="72%" stop-color="#0E0B09"></stop></radialGradient></defs>
+            <rect x="0" y="0" width="1180" height="800" fill="url(#klnBg)" onClick="{{zoomReset}}"></rect>
+            <sc-for list="{{gedges}}" as="e" hint-placeholder-count="38"><line x1="{{e.x1}}" y1="{{e.y1}}" x2="{{e.x2}}" y2="{{e.y2}}" stroke="{{e.sc}}" stroke-opacity="{{e.so}}" stroke-width="{{e.w}}" stroke-linecap="round" stroke-dasharray="{{e.dash}}" style="{{e.anim}}"></line></sc-for>
+            <sc-for list="{{gnodes}}" as="n" hint-placeholder-count="38">
+              <g style="{{n.gstyle}}" opacity="{{n.op}}" onPointerDown="{{n.onDown}}" onClick="{{n.onSel}}" onMouseEnter="{{n.onHov}}">
+                <circle cx="{{n.cx}}" cy="{{n.cy}}" r="{{n.haloR}}" fill="{{n.color}}" opacity="{{n.halo}}" style="filter:blur(7px);pointer-events:none"></circle>
+                <sc-if value="{{n.isP}}" hint-placeholder-val="{{ false }}"><rect x="{{n.rx}}" y="{{n.ry}}" width="{{n.w}}" height="{{n.h}}" rx="{{n.rrx}}" fill="{{n.fillSoft}}" stroke="{{n.stroke}}" stroke-width="{{n.sw}}"></rect><rect x="{{n.crx}}" y="{{n.cry}}" width="{{n.cw}}" height="{{n.cw}}" rx="2.5" fill="{{n.color}}" style="pointer-events:none"></rect></sc-if>
+                <sc-if value="{{n.notP}}" hint-placeholder-val="{{ true }}"><circle cx="{{n.cx}}" cy="{{n.cy}}" r="{{n.r}}" fill="{{n.fillSoft}}" stroke="{{n.stroke}}" stroke-width="{{n.sw}}"></circle><circle cx="{{n.cx}}" cy="{{n.cy}}" r="{{n.coreR}}" fill="{{n.color}}" style="pointer-events:none"></circle></sc-if>
+                <text x="{{n.tx}}" y="{{n.ty}}" text-anchor="middle" opacity="{{n.lop}}" style="font-family:'JetBrains Mono',monospace;font-size:{{n.fs}}px;fill:#F2EADB;pointer-events:none;paint-order:stroke;stroke:#0E0B09;stroke-width:3.5px;stroke-linejoin:round">{{n.label}}</text>
+              </g>
+            </sc-for>
+            <sc-if value="{{showCard}}" hint-placeholder-val="{{ false }}"><foreignObject x="{{selCard.x}}" y="{{selCard.y}}" width="236" height="160" style="overflow:visible;pointer-events:none"><div xmlns="http://www.w3.org/1999/xhtml" style="background:rgba(18,15,12,.94);border:1px solid {{selCard.color}};border-radius:12px;padding:12px 14px;font-family:'Inter',system-ui,sans-serif;box-shadow:0 18px 44px rgba(0,0,0,.55);animation:klnCardIn .35s ease both"><div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:{{selCard.color}}">{{selCard.cat}}</div><div style="font-family:'Fraunces',serif;font-weight:600;font-size:15px;color:#F4ECDD;margin:4px 0 5px;line-height:1.12">{{selCard.title}}</div><div style="font-size:11px;color:#C7BBA6;line-height:1.45">{{selCard.blurb}}</div></div></foreignObject></sc-if>
+            <g id="kln-ripples" style="pointer-events:none"></g>
+          </svg>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:14px">
+          <aside style="border:1px solid rgba(244,236,221,.12);border-radius:18px;background:#1E1A16;padding:22px;flex:1;min-width:300px">
+            <div style="display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#C7BBA6"><span style="width:10px;height:10px;border-radius:50%;background:{{panelColor}}"></span>{{panelCat}}</div>
+            <h3 style="font-family:'Fraunces',serif;font-weight:600;font-size:1.32rem;margin:10px 0 10px;color:#F4ECDD;word-break:break-word">{{panelTitle}}</h3>
+            <p style="font-size:.94rem;color:#C7BBA6;margin:0 0 16px">{{panelBlurb}}</p>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8A7E6C;margin-bottom:8px">{{connLabel}}</div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <sc-for list="{{panelConns}}" as="c" hint-placeholder-count="3"><div style="display:flex;align-items:baseline;gap:8px;font-size:.84rem"><span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent-soft,#ECB87D);white-space:nowrap">{{c.r}}</span><span style="color:#C7BBA6;font-family:'JetBrains Mono',monospace">{{c.l}}</span></div></sc-for>
+            </div>
+          </aside>
+          <div style="border:1px solid rgba(244,236,221,.12);border-radius:18px;background:#1E1A16;padding:18px;flex:1;min-width:300px">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#8A7E6C;margin-bottom:12px">{{legendLabel}}</div>
+            <div style="display:flex;flex-wrap:wrap;gap:7px">
+              <sc-for list="{{legend}}" as="c" hint-placeholder-count="9"><button onClick="{{c.onClick}}" style="display:inline-flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:11px;background:{{c.bg}};color:{{c.fg}};border:1px solid {{c.bd}};border-radius:999px;padding:5px 10px;cursor:pointer;transition:all .2s"><span style="width:9px;height:9px;border-radius:50%;background:{{c.color}};display:inline-block"></span>{{c.label}}</button></sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="work" data-screen-label="Jak pracujemy" style="max-width:1200px;margin:0 auto;padding:62px 28px">
+    <div style="margin-bottom:30px;max-width:62ch">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-soft,#ECB87D)">{{workEyebrow}}</div>
+      <h2 style="font-family:'Fraunces',serif;font-weight:600;font-size:clamp(1.8rem,1.3rem+1.7vw,2.7rem);margin:12px 0 0;line-height:1.1">{{workTitle}}</h2>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:14px">
+      <sc-for list="{{steps}}" as="s" hint-placeholder-count="4">
+        <div style="flex:1;min-width:230px;border:1px solid var(--hairline,rgba(244,236,221,.12));background:var(--glass,rgba(30,26,22,.5));backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:24px;transition:border-color .3s" style-hover="border-color:var(--accent,#D89548)">
+          <div style="font-family:'Fraunces',serif;font-weight:600;font-size:2rem;color:var(--accent,#D89548);line-height:1">{{s.no}}</div>
+          <h3 style="font-size:1.05rem;margin:12px 0 6px;font-weight:600">{{s.t}}</h3>
+          <p style="margin:0;font-size:.92rem;color:var(--ink-2,#C7BBA6)">{{s.d}}</p>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section id="collab" data-screen-label="Współpraca" style="max-width:1200px;margin:0 auto;padding:62px 28px">
+    <div style="max-width:64ch;margin-bottom:30px;animation:klnReveal .8s both;animation-timeline:view();animation-range:entry 0% cover 22%">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-soft,#ECB87D)">{{collabEyebrow}}</div>
+      <h2 style="font-family:'Fraunces',serif;font-weight:600;font-size:clamp(1.8rem,1.3rem+1.7vw,2.7rem);margin:12px 0 10px;line-height:1.1">{{collabTitle}}</h2>
+      <p style="color:var(--ink-2,#C7BBA6);margin:0;font-size:1.06rem">{{collabBody}}</p>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:14px">
+      <div style="flex:1;min-width:230px;border:1px solid var(--hairline,rgba(244,236,221,.12));background:var(--glass,rgba(30,26,22,.5));backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:22px;transition:border-color .3s" style-hover="border-color:var(--accent,#D89548)"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent,#D89548)">01</div><h3 style="font-size:1.05rem;margin:12px 0 6px;font-weight:600">{{svc0t}}</h3><p style="margin:0;font-size:.92rem;color:var(--ink-2,#C7BBA6)">{{svc0d}}</p></div>
+      <div style="flex:1;min-width:230px;border:1px solid var(--hairline,rgba(244,236,221,.12));background:var(--glass,rgba(30,26,22,.5));backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:22px;transition:border-color .3s" style-hover="border-color:var(--accent,#D89548)"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent,#D89548)">02</div><h3 style="font-size:1.05rem;margin:12px 0 6px;font-weight:600">{{svc1t}}</h3><p style="margin:0;font-size:.92rem;color:var(--ink-2,#C7BBA6)">{{svc1d}}</p></div>
+      <div style="flex:1;min-width:230px;border:1px solid var(--hairline,rgba(244,236,221,.12));background:var(--glass,rgba(30,26,22,.5));backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:22px;transition:border-color .3s" style-hover="border-color:var(--accent,#D89548)"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent,#D89548)">03</div><h3 style="font-size:1.05rem;margin:12px 0 6px;font-weight:600">{{svc2t}}</h3><p style="margin:0;font-size:.92rem;color:var(--ink-2,#C7BBA6)">{{svc2d}}</p></div>
+      <div style="flex:1;min-width:230px;border:1px solid var(--hairline,rgba(244,236,221,.12));background:var(--glass,rgba(30,26,22,.5));backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:16px;padding:22px;transition:border-color .3s" style-hover="border-color:var(--accent,#D89548)"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent,#D89548)">04</div><h3 style="font-size:1.05rem;margin:12px 0 6px;font-weight:600">{{svc3t}}</h3><p style="margin:0;font-size:.92rem;color:var(--ink-2,#C7BBA6)">{{svc3d}}</p></div>
+    </div>
+    <div style="margin-top:26px;display:flex;flex-wrap:wrap;gap:18px;align-items:center">
+      <a href="mailto:kontakt@klntech.pl" data-ripple style="position:relative;overflow:hidden;background:var(--accent,#D89548);color:#1A1206;font-weight:600;border-radius:999px;padding:13px 24px;font-size:15px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:transform .2s" style-hover="transform:translateY(-2px)">{{collabCta}} <span style="font-size:16px">→</span></a>
+      <span style="font-size:12.5px;color:var(--ink-3,#8A7E6C);max-width:48ch">{{privacyNote}}</span>
+    </div>
+  </section>
+
+  <section style="position:relative;z-index:2;padding:22px 0;border-top:1px solid var(--hairline,rgba(244,236,221,.12));overflow:hidden;-webkit-mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)">
+    <div style="display:flex;gap:20px;width:max-content;animation:klnTicker 34s linear infinite;font-family:'Fraunces',serif;font-weight:500;font-size:clamp(1.4rem,1rem+1.6vw,2.2rem);color:var(--ink-3,#8A7E6C);white-space:nowrap">
+      <span>SwiftUI</span><span style="color:var(--accent,#D89548)">·</span><span>Kotlin Multiplatform</span><span style="color:var(--accent,#D89548)">·</span><span>Unity 6 AR</span><span style="color:var(--accent,#D89548)">·</span><span>Spring Boot</span><span style="color:var(--accent,#D89548)">·</span><span>Stripe Connect</span><span style="color:var(--accent,#D89548)">·</span><span>Compose MP</span><span style="color:var(--accent,#D89548)">·</span><span>PostgreSQL</span><span style="color:var(--accent,#D89548)">·</span><span>SwiftData</span><span style="color:var(--accent,#D89548)">·</span>
+      <span>SwiftUI</span><span style="color:var(--accent,#D89548)">·</span><span>Kotlin Multiplatform</span><span style="color:var(--accent,#D89548)">·</span><span>Unity 6 AR</span><span style="color:var(--accent,#D89548)">·</span><span>Spring Boot</span><span style="color:var(--accent,#D89548)">·</span><span>Stripe Connect</span><span style="color:var(--accent,#D89548)">·</span><span>Compose MP</span><span style="color:var(--accent,#D89548)">·</span><span>PostgreSQL</span><span style="color:var(--accent,#D89548)">·</span><span>SwiftData</span><span style="color:var(--accent,#D89548)">·</span>
+    </div>
+  </section>
+
+  <section id="contact" data-screen-label="Kontakt" style="background:#100D0B;border-top:1px solid var(--hairline,rgba(244,236,221,.12))">
+    <div style="max-width:1200px;margin:0 auto;padding:62px 28px" itemscope itemtype="https://schema.org/Organization">
+      <meta itemprop="name" content="Wojciech Kłaniecki KLNTech">
+      <meta itemprop="taxID" content="PL8863039727">
+      <meta itemprop="email" content="kontakt@klntech.pl">
+      <div style="margin-bottom:30px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-soft,#ECB87D)">{{contactEyebrow}}</div>
+        <h2 style="font-family:'Fraunces',serif;font-weight:600;font-size:clamp(1.8rem,1.3rem+1.7vw,2.7rem);margin:12px 0 0;line-height:1.1;color:#F4ECDD">{{contactTitle}}</h2>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:30px;align-items:flex-start">
+        <dl style="flex:1.3;min-width:320px;display:grid;grid-template-columns:auto 1fr;gap:12px 22px;margin:0;font-size:.96rem">
+          <dt style="color:#8A7E6C;font-family:'JetBrains Mono',monospace;font-size:12px">{{flName}}</dt><dd style="margin:0;color:#F4ECDD" itemprop="legalName">Wojciech Kłaniecki KLNTech</dd>
+          <dt style="color:#8A7E6C;font-family:'JetBrains Mono',monospace;font-size:12px">{{flForm}}</dt><dd style="margin:0;color:#F4ECDD">{{vForm}}</dd>
+          <dt style="color:#8A7E6C;font-family:'JetBrains Mono',monospace;font-size:12px">NIP</dt><dd style="margin:0;color:#F4ECDD">8863039727</dd>
+          <dt style="color:#8A7E6C;font-family:'JetBrains Mono',monospace;font-size:12px">REGON</dt><dd style="margin:0;color:#F4ECDD">542099119</dd>
+          <dt style="color:#8A7E6C;font-family:'JetBrains Mono',monospace;font-size:12px">PKD</dt><dd style="margin:0;color:#F4ECDD">62.10.B</dd>
+          <dt style="color:#8A7E6C;font-family:'JetBrains Mono',monospace;font-size:12px">{{flAddr}}</dt><dd style="margin:0;color:#F4ECDD">Przyjaciół Żołnierza 22/11, 58-304 Wałbrzych</dd>
+          <dt style="color:#8A7E6C;font-family:'JetBrains Mono',monospace;font-size:12px">{{flStart}}</dt><dd style="margin:0;color:#F4ECDD">01.07.2025</dd>
+        </dl>
+        <div data-spotlight style="position:relative;overflow:hidden;flex:1;min-width:280px;border:1px solid rgba(244,236,221,.12);background:#1E1A16;border-radius:18px;padding:26px">
+          <div style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(240px circle at var(--mx,80%) var(--my,-10%), rgba(216,149,72,.20), transparent 60%)"></div>
+          <p style="position:relative;color:#C7BBA6;margin:0 0 18px;font-size:1rem">{{contactBlurb}}</p>
+          <a href="mailto:kontakt@klntech.pl" data-ripple style="position:relative;overflow:hidden;background:var(--accent,#D89548);color:#1A1206;border:none;font-weight:600;border-radius:999px;padding:13px 22px;font-size:14.5px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:transform .2s" style-hover="transform:translateY(-2px)">kontakt@klntech.pl</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer style="background:#0C0A08;border-top:1px solid var(--hairline,rgba(244,236,221,.12))">
+    <div style="max-width:1200px;margin:0 auto;padding:28px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;align-items:center;font-size:13px;color:#8A7E6C">
+      <span>© 2026 Wojciech Kłaniecki KLNTech · NIP 8863039727 · Wałbrzych, PL</span>
+      <button onClick="{{toggleLang}}" style="border:1px solid rgba(244,236,221,.12);background:transparent;color:#C7BBA6;border-radius:999px;padding:7px 14px;font-size:12px;cursor:pointer;font-family:inherit">{{langBtn}}</button>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { lang:'pl', theme:'dark', dir:'atelier', sel:'makeitbakeit', hover:null, filter:null, zoomed:false };
+
+  catColor = { project:'#D89548', hub:'#CBBCA0', workflow:'#E0A24A', agent:'#ECB87D', integrity:'#DC3D3D', engineering:'#7FA46A', audit:'#C58A5A', design:'#CC5570', bridge:'#4E7FA8', process:'#F4D4A0', android:'#5BA6A0', unity:'#C06A33', knowledge:'#9B8CCB' };
+  catLabel = {
+    project:{pl:'Projekt',en:'Project'}, hub:{pl:'Obszar',en:'Domain'}, workflow:{pl:'Orkiestracja',en:'Orchestration'}, agent:{pl:'Agent / rola',en:'Agent / role'},
+    integrity:{pl:'Rzetelność',en:'Integrity'}, engineering:{pl:'Reguła inżynierska',en:'Engineering rule'}, audit:{pl:'Audyt / jakość',en:'Audit / quality'},
+    design:{pl:'System designu',en:'Design system'}, bridge:{pl:'Most design→kod',en:'Design→code bridge'}, process:{pl:'Proces / sync',en:'Process / sync'},
+    android:{pl:'Android · KMP',en:'Android · KMP'}, unity:{pl:'Unity · AR',en:'Unity · AR'}, knowledge:{pl:'Wiedza · loopy',en:'Knowledge · loops'}
+  };
+
+  nodes = [
+    {id:'makeitbakeit',label:'MakeItBakeIt',cat:'project',pl:'Marketplace wypieków z personalizacją tortu w AR (KMP + Unity).',en:'Confectionery marketplace with AR cake customization (KMP + Unity).'},
+    {id:'platana',label:'Platana',cat:'project',pl:'Natywny iOS atlas botaniczny do pielęgnacji roślin (SwiftUI).',en:'Native iOS botanical plant-care atlas (SwiftUI).'},
+    {id:'makeit-ar',label:'MakeIt (Unity AR)',cat:'project',pl:'Moduł AR osadzony jako Unity as a Library.',en:'AR module embedded as Unity as a Library.'},
+    {id:'task-decomposition',label:'task-decomposition',cat:'workflow',pl:'Rozbija duży request na podzadania z własnym kryterium akceptacji, zanim zacznie się kodowanie.',en:'Splits a large request into sub-tasks with explicit acceptance criteria before any coding starts.'},
+    {id:'develop-test-review-workflow',label:'develop-test-review',cat:'workflow',pl:'Org-standard pętli: feature-developer → test-writer ↔ feature-developer → code-reviewer, z eskalacją modelu.',en:'The org-standard loop: feature-developer → test-writer ↔ feature-developer → code-reviewer, with model escalation.'},
+    {id:'feature-developer',label:'feature-developer',cat:'agent',pl:'Agent piszący implementację w izolowanym kontekście.',en:'The agent that writes the implementation in an isolated context.'},
+    {id:'test-writer',label:'test-writer',cat:'agent',pl:'Agent piszący testy; pętla z developerem aż do zieleni.',en:'The agent that writes tests; loops with the developer until green.'},
+    {id:'code-reviewer',label:'code-reviewer',cat:'agent',pl:'Agent recenzujący zmianę względem requestu; domyka epizod.',en:'The agent that reviews the change against the request; closes the episode.'},
+    {id:'anti-hallucination',label:'anti-hallucination',cat:'integrity',pl:'Nie podawaj jako prawdy niczego, czego nie zaobserwowałeś w tej sesji.',en:'Never state as true anything you did not observe in this session.'},
+    {id:'root-cause-analysis',label:'root-cause-analysis',cat:'integrity',pl:'Szukaj prawdziwej przyczyny zamiast uciszać objaw (zakaz retry-do-zieleni).',en:'Find the real cause instead of silencing the symptom (no retry-until-green).'},
+    {id:'solid-principles',label:'solid-principles',cat:'engineering',pl:'SOLID z naciskiem na Single Responsibility; duży plik to sygnał do dekompozycji.',en:'SOLID with an emphasis on Single Responsibility; a big file is a signal to decompose.'},
+    {id:'reuse-over-duplication',label:'reuse-over-duplication',cat:'engineering',pl:'DRY: tej samej wiedzy nie kopiuj w 2+ miejscach, wydziel helper.',en:'DRY: do not copy the same knowledge in 2+ places, extract a helper.'},
+    {id:'interface-oriented-boundaries',label:'interface-boundaries',cat:'engineering',pl:'Na realnie wymiennej granicy I/O postaw interfejs lub protokół; impl wybiera composition-root.',en:'Put an interface or protocol on a genuinely swappable I/O boundary; the composition root picks the impl.'},
+    {id:'minimize-boolean-state',label:'minimize-boolean-state',cat:'engineering',pl:'Ograniczaj zbędne flagi boolean; powiązane stany modeluj enumem.',en:'Cut redundant boolean flags; model related states with an enum.'},
+    {id:'error-codes-pattern',label:'error-codes-pattern',cat:'engineering',pl:'internalCode + providerCode + message; schemat zależny od platformy.',en:'internalCode + providerCode + message; the numeric scheme is platform-specific.'},
+    {id:'code-documentation',label:'code-documentation',cat:'engineering',pl:'Komentarze po angielsku; każda publiczna metoda ma opis kontraktu.',en:'Comments in English; every public method documents its contract.'},
+    {id:'commit-messages',label:'commit-messages',cat:'engineering',pl:'Prosty format bullet-point, angielski, past tense.',en:'A simple bullet-point format, English, past tense.'},
+    {id:'versioning',label:'versioning',cat:'engineering',pl:'Org-wide SemVer; jeden bump na merge do main, jedno kanoniczne miejsce per projekt.',en:'Org-wide SemVer; one bump per merge to main, one canonical place per project.'},
+    {id:'update-plan',label:'update-plan',cat:'engineering',pl:'Żywy plan projektu aktualizowany po merytorycznej zmianie.',en:'A living project plan updated after any substantive change.'},
+    {id:'deep-review',label:'deep-review',cat:'audit',pl:'Audyt całego projektu przez zespół wyspecjalizowanych recenzentów (read-only).',en:'A whole-project audit by a team of specialist reviewers (read-only).'},
+    {id:'deep-review-max',label:'deep-review-max',cat:'audit',pl:'Wariant maksymalnej rygorystyczności, każdy agent na najnowszym Opusie.',en:'A maximum-rigor variant, every agent on the latest Opus.'},
+    {id:'skill-test',label:'skill-test',cat:'audit',pl:'Ręczny audyt jakości samych skilli (frontmatter, konflikty, dyskoverowalność).',en:'A manual quality audit of the skills themselves (frontmatter, conflicts, discoverability).'},
+    {id:'propose-improvement',label:'propose-improvement',cat:'audit',pl:'Po nieudanej iteracji proponuje konkretną zmianę reguły lub promptu, człowiek decyduje.',en:'After a failed iteration, proposes a concrete rule or prompt change, the human decides.'},
+    {id:'ci-summary',label:'ci-summary',cat:'audit',pl:'Spójność pipeline GitHub Actions ze step-summary i nazwami jobów.',en:'Keeps the GitHub Actions pipeline consistent with step summaries and job names.'},
+    {id:'design-source-of-truth',label:'design-source-of-truth',cat:'design',pl:'Design pochodzi z JEDNEGO kanonicznego zestawu plików; zakaz forkowania.',en:'Design comes from ONE canonical set of files; no forking.'},
+    {id:'edible-colors',label:'edible-colors',cat:'design',pl:'Każdy kolor reprezentuje coś jadalnego, żadnego chromu ani neonu.',en:'Every color represents something edible, no chrome or neon.'},
+    {id:'semantic-tokens',label:'semantic-tokens',cat:'design',pl:'Warstwa tokenów-ról; rola istnieje tylko, gdy stan różni się od akcentu.',en:'A semantic (role) token layer; a role exists only when a state differs from the accent.'},
+    {id:'candy-components',label:'candy-components',cat:'design',pl:'Jedna kanoniczna implementacja każdego komponentu UI w 3 motywach.',en:'One canonical implementation of each UI component across 3 themes.'},
+    {id:'component-parity',label:'component-parity',cat:'design',pl:'Te same komponenty wyglądają identycznie w prototypie i aplikacji-matce.',en:'The same components look identical in the prototype and the mother-app.'},
+    {id:'notification-badges',label:'notification-badges',cat:'design',pl:'Badge to alert: zawsze soczysta wisienka, niezależnie od motywu.',en:'A badge means alert: always a juicy cherry, regardless of theme.'},
+    {id:'toasts',label:'toasts',cat:'design',pl:'Jedna implementacja toasta: 4 typy razy 3 motywy, auto-dismiss.',en:'One toast implementation: 4 types by 3 themes, auto-dismiss.'},
+    {id:'sprites-first',label:'sprites-first',cat:'design',pl:'Ikony z assets/sprites konsumujesz, nie rysujesz od nowa.',en:'You consume icons from assets/sprites, you do not redraw them.'},
+    {id:'living-stylebook',label:'living-stylebook',cat:'design',pl:'Żywy stylebook aktualizowany w tym samym zadaniu co zmiana designu.',en:'A living stylebook updated in the same task as the design change.'},
+    {id:'design-to-unity',label:'design-to-unity',cat:'bridge',pl:'Wierne przeniesienie designu webowego (z animacjami) na uGUI w Unity.',en:'A faithful port of the web design (with animations) to uGUI in Unity.'},
+    {id:'design-to-compose',label:'design-to-compose',cat:'bridge',pl:'Most design→Compose Multiplatform dla aplikacji-matki.',en:'A design→Compose Multiplatform bridge for the mother-app.'},
+    {id:'design-to-swiftui',label:'design-to-swiftui',cat:'bridge',pl:'Most design→SwiftUI; bramkowany przez parytet z designem.',en:'A design→SwiftUI bridge, gated by parity with the design.'},
+    {id:'orgskills-sync',label:'orgskills-sync',cat:'process',pl:'Pre-hook: przyswój zmiany z repo Organization Skills przed pracą.',en:'A pre-hook: pull changes from the Organization Skills repo before working.'},
+    {id:'export-org-skills',label:'export-org-skills',cat:'process',pl:'Jednorodny eksport designu i skilli do paczki dla całej organizacji.',en:'A uniform export of design and skills into a package for the whole organization.'},
+    {id:'org-statusline',label:'org-statusline',cat:'process',pl:'Wspólny pasek statusu Claude Code identyczny w każdym repo.',en:'A shared Claude Code status line, identical across every repo.'}
+  ];
+  edges = [
+    {s:'task-decomposition',t:'develop-test-review-workflow',pl:'opakowuje',en:'wraps'},
+    {s:'develop-test-review-workflow',t:'feature-developer',pl:'orkiestruje',en:'orchestrates'},
+    {s:'develop-test-review-workflow',t:'test-writer',pl:'orkiestruje',en:'orchestrates'},
+    {s:'develop-test-review-workflow',t:'code-reviewer',pl:'orkiestruje',en:'orchestrates'},
+    {s:'feature-developer',t:'test-writer',pl:'pętla',en:'loop'},
+    {s:'develop-test-review-workflow',t:'root-cause-analysis',pl:'bugfix pass 1',en:'bugfix pass 1'},
+    {s:'code-reviewer',t:'propose-improvement',pl:'domknięcie epizodu',en:'episode close'},
+    {s:'root-cause-analysis',t:'anti-hallucination',pl:'bliźniak',en:'twin'},
+    {s:'code-reviewer',t:'solid-principles',pl:'egzekwuje',en:'enforces'},
+    {s:'code-reviewer',t:'reuse-over-duplication',pl:'egzekwuje',en:'enforces'},
+    {s:'code-reviewer',t:'interface-oriented-boundaries',pl:'egzekwuje',en:'enforces'},
+    {s:'code-reviewer',t:'minimize-boolean-state',pl:'egzekwuje',en:'enforces'},
+    {s:'code-reviewer',t:'error-codes-pattern',pl:'egzekwuje',en:'enforces'},
+    {s:'code-reviewer',t:'code-documentation',pl:'egzekwuje',en:'enforces'},
+    {s:'develop-test-review-workflow',t:'commit-messages',pl:'stosuje',en:'applies'},
+    {s:'develop-test-review-workflow',t:'versioning',pl:'stosuje',en:'applies'},
+    {s:'develop-test-review-workflow',t:'update-plan',pl:'stosuje',en:'applies'},
+    {s:'design-source-of-truth',t:'edible-colors',pl:'rządzi',en:'governs'},
+    {s:'design-source-of-truth',t:'semantic-tokens',pl:'rządzi',en:'governs'},
+    {s:'design-source-of-truth',t:'candy-components',pl:'rządzi',en:'governs'},
+    {s:'design-source-of-truth',t:'component-parity',pl:'rządzi',en:'governs'},
+    {s:'design-source-of-truth',t:'notification-badges',pl:'rządzi',en:'governs'},
+    {s:'design-source-of-truth',t:'toasts',pl:'rządzi',en:'governs'},
+    {s:'design-source-of-truth',t:'sprites-first',pl:'rządzi',en:'governs'},
+    {s:'design-source-of-truth',t:'living-stylebook',pl:'rządzi',en:'governs'},
+    {s:'edible-colors',t:'semantic-tokens',pl:'zasila',en:'feeds'},
+    {s:'deep-review-max',t:'deep-review',pl:'wariant',en:'variant'},
+    {s:'orgskills-sync',t:'export-org-skills',pl:'pull / push',en:'pull / push'},
+    {s:'design-to-unity',t:'candy-components',pl:'konsumuje',en:'consumes'},
+    {s:'design-to-compose',t:'design-source-of-truth',pl:'konsumuje',en:'consumes'},
+    {s:'design-to-swiftui',t:'design-source-of-truth',pl:'konsumuje',en:'consumes'},
+    {s:'makeitbakeit',t:'develop-test-review-workflow',pl:'buduje wg',en:'built with'},
+    {s:'makeitbakeit',t:'design-source-of-truth',pl:'design wg',en:'designed with'},
+    {s:'makeitbakeit',t:'design-to-compose',pl:'design→kod',en:'design→code'},
+    {s:'makeitbakeit',t:'makeit-ar',pl:'osadza',en:'embeds'},
+    {s:'makeit-ar',t:'design-to-unity',pl:'design→kod',en:'design→code'},
+    {s:'platana',t:'develop-test-review-workflow',pl:'buduje wg',en:'built with'},
+    {s:'platana',t:'design-to-swiftui',pl:'design→kod',en:'design→code'},
+    {s:'platana',t:'error-codes-pattern',pl:'stosuje',en:'applies'}
+  ];
+
+  C = {
+    pl:{
+      navStudio:'Studio', navWork:'Projekty', navGraph:'Graf', navContact:'Kontakt',
+      heroEyebrow:'Wałbrzych · PL · software studio',
+      heroTitle:'Projektujemy i dowozimy aplikacje z dyscypliną.',
+      heroSub:'Natywne aplikacje mobilne, AR i systemy backendowe. Od systemu designu, przez kod (SwiftUI, Kotlin Multiplatform, Unity), po backend i wydanie.',
+      ctaWork:'Zobacz projekty', ctaGraph:'Graf skilli',
+      aboutEyebrow:'Studio', aboutTitle:'Jednoosobowe studio, pełny zakres produktu',
+      aboutBody:'Projektujemy i wdrażamy produkty mobilne end-to-end, w oparciu o własny, skodyfikowany zestaw reguł inżynierskich i designerskich, który zapewnia powtarzalną jakość.',
+      cap0t:'Aplikacje natywne', cap0d:'SwiftUI · Kotlin MP · Compose',
+      cap1t:'AR', cap1d:'Unity 6 · AR Foundation · UaaL',
+      cap2t:'Backend i płatności', cap2d:'Spring Boot · Ktor · Stripe Connect',
+      cap3t:'Systemy designu', cap3d:'Tokeny · wielomotywowość · design→kod',
+      cap4t:'Dyscyplina', cap4d:'develop→test→review · wersjonowanie',
+      projEyebrow:'Projekty', projTitle:'Dwa flagowe produkty, na żywo',
+      projMibTag:'iOS · Android · AR · Marketplace',
+      projMibDesc:'Marketplace wypieków z personalizacją tortu w AR. Kotlin Multiplatform z modułem Unity AR, backend Spring Boot ze Stripe Connect. Po prawej klikalny prototyp w 3 motywach.',
+      projPlatTag:'iOS · SwiftUI · 5 języków',
+      projPlatDesc:'Żywy atlas botaniczny do pielęgnacji roślin. 216 ręcznie rysowanych rycin, 4 motywy, w pełni offline, 121 testów. Obok klikalny prototyp z nawigacją.',
+      themesLabel:'motywy', labLabel:'Lab / w przygotowaniu:',
+      demoMibLabel:'makeitbakeit · patisserie · 3 motywy', demoPlatLabel:'platana · 4 motywy', caseStudyCta:'Pełne case study',
+      graphEyebrow:'Capability graph', graphTitle:'Graf skilli i agentów organizacji',
+      graphSub:'Realny, używany w pracy zestaw reguł: węzły to projekty i skille, krawędzie to orkiestracja i zależności.',
+      graphHint:'Najedź, kliknij albo przeciągnij węzeł.',
+      legendLabel:'Filtruj kategorie', connLabel:'Połączenia',
+      workEyebrow:'Jak pracujemy', workTitle:'Powtarzalny proces inżynierski',
+      contactEyebrow:'Kontakt', contactTitle:'Dane firmowe',
+      contactBlurb:'Studio software\u2019owe z Wałbrzycha. Piszesz aplikację mobilną, AR albo backend? Napisz.',
+      flName:'Nazwa', flForm:'Forma', flAddr:'Adres', flStart:'Start',
+      vForm:'Jednoosobowa działalność gospodarcza',
+      navCollab:'Współpraca',
+      collabEyebrow:'Współpraca', collabTitle:'Z kim i nad czym pracujemy',
+      collabBody:'KLNTech to partner technologiczny dla założycieli, zespołów marketingu i studiów, które potrzebują dopracowanego produktu mobilnego, od pomysłu, przez design i kod, po wydanie i backend.',
+      svc0t:'Produkt mobilny end-to-end', svc0d:'iOS i Android z jednego kodu (SwiftUI, Kotlin Multiplatform). Od systemu designu po publikację w sklepie.',
+      svc1t:'AR i 3D', svc1d:'Interaktywne moduły AR (Unity as a Library) w natywnej aplikacji: produkt, którego klient dotknie w swojej przestrzeni.',
+      svc2t:'Backend i płatności', svc2d:'Spring Boot, PostgreSQL i Stripe Connect: zamówienia, rozliczenia marketplace i integracje gotowe na produkcję.',
+      svc3t:'Design system i audyt', svc3d:'Tokeny, wielomotywowość, parytet design↔kod oraz deep-review jakości całego projektu.',
+      collabCta:'Porozmawiajmy o projekcie',
+      privacyNote:'Strona statyczna, bez ciasteczek marketingowych i trackerów third-party. Administrator danych: Wojciech Kłaniecki KLNTech, kontakt@klntech.pl.',
+      dirAtelier:'Widok: Atelier', dirGraph:'Widok: Graf', dirBtnTo:'Graf', dirBtnBack:'Atelier',
+      steps:[
+        {no:'01',t:'Dekompozycja',d:'Duży request rozbity na podzadania z jasnym kryterium akceptacji.'},
+        {no:'02',t:'Develop → Test → Review',d:'Trzy role w pętli: implementacja, testy, recenzja względem requestu.'},
+        {no:'03',t:'Root-cause i rzetelność',d:'Naprawiamy przyczynę, nie objaw. Nic nie jest „prawdą” bez obserwacji.'},
+        {no:'04',t:'Wersjonowanie i audyt',d:'Org-wide SemVer, jeden bump na merge, okresowy deep-review całości.'}
+      ]
+    },
+    en:{
+      navStudio:'Studio', navWork:'Work', navGraph:'Graph', navContact:'Contact',
+      heroEyebrow:'Wałbrzych · PL · software studio',
+      heroTitle:'We design and ship apps with discipline.',
+      heroSub:'Native mobile apps, AR and backend systems. From a design system, through code (SwiftUI, Kotlin Multiplatform, Unity), to backend and release.',
+      ctaWork:'See the work', ctaGraph:'Skills graph',
+      aboutEyebrow:'Studio', aboutTitle:'A one-person studio, full product scope',
+      aboutBody:'We design and ship mobile products end-to-end, against our own codified set of engineering and design rules that keeps quality repeatable.',
+      cap0t:'Native apps', cap0d:'SwiftUI · Kotlin MP · Compose',
+      cap1t:'AR', cap1d:'Unity 6 · AR Foundation · UaaL',
+      cap2t:'Backend & payments', cap2d:'Spring Boot · Ktor · Stripe Connect',
+      cap3t:'Design systems', cap3d:'Tokens · multi-theme · design→code',
+      cap4t:'Discipline', cap4d:'develop→test→review · versioning',
+      projEyebrow:'Work', projTitle:'Two flagship products, live',
+      projMibTag:'iOS · Android · AR · Marketplace',
+      projMibDesc:'A confectionery marketplace with AR cake customization. Kotlin Multiplatform with a Unity AR module, a Spring Boot backend with Stripe Connect. A clickable 3-theme prototype is on the right.',
+      projPlatTag:'iOS · SwiftUI · 5 languages',
+      projPlatDesc:'A living botanical atlas for plant care. 216 hand-drawn illustrations, 4 themes, fully offline, 121 tests. A clickable prototype with navigation sits alongside.',
+      themesLabel:'themes', labLabel:'Lab / in progress:',
+      demoMibLabel:'makeitbakeit · patisserie · 3 themes', demoPlatLabel:'platana · 4 themes', caseStudyCta:'Full case study',
+      graphEyebrow:'Capability graph', graphTitle:'The organization\u2019s skill and agent graph',
+      graphSub:'A real, working set of rules: nodes are projects and skills, edges are orchestration and dependencies.',
+      graphHint:'Hover, click or drag a node.',
+      legendLabel:'Filter categories', connLabel:'Connections',
+      workEyebrow:'How we work', workTitle:'A repeatable engineering process',
+      contactEyebrow:'Contact', contactTitle:'Company details',
+      contactBlurb:'A software studio from Wałbrzych, Poland. Building a mobile app, AR or backend? Get in touch.',
+      flName:'Legal name', flForm:'Form', flAddr:'Address', flStart:'Started',
+      vForm:'Sole proprietorship (Poland)',
+      navCollab:'Collaboration',
+      collabEyebrow:'Work with us', collabTitle:'Who we build with, and on what',
+      collabBody:'KLNTech is a technology partner for founders, marketing teams and studios that need a polished mobile product: from the idea, through design and code, to release and backend.',
+      svc0t:'End-to-end mobile product', svc0d:'iOS and Android from one codebase (SwiftUI, Kotlin Multiplatform). From a design system to store release.',
+      svc1t:'AR & 3D', svc1d:'Interactive AR modules (Unity as a Library) in a native app: a product your customer can place in their own space.',
+      svc2t:'Backend & payments', svc2d:'Spring Boot, PostgreSQL and Stripe Connect: orders, marketplace settlement and production-ready integrations.',
+      svc3t:'Design system & audit', svc3d:'Tokens, multi-theme, design↔code parity and a deep-review of the whole project quality.',
+      collabCta:'Let us talk about your project',
+      privacyNote:'A static site with no marketing cookies and no third-party trackers. Data controller: Wojciech Kłaniecki KLNTech, kontakt@klntech.pl.',
+      dirAtelier:'View: Atelier', dirGraph:'View: Graph', dirBtnTo:'Graph', dirBtnBack:'Atelier',
+      steps:[
+        {no:'01',t:'Decomposition',d:'A big request split into subtasks with clear acceptance criteria.'},
+        {no:'02',t:'Develop → Test → Review',d:'Three roles in a loop: implementation, tests, review against the request.'},
+        {no:'03',t:'Root-cause & integrity',d:'We fix the cause, not the symptom. Nothing is „true” without observation.'},
+        {no:'04',t:'Versioning & audit',d:'Org-wide SemVer, one bump per merge, periodic deep-review of the whole.'}
+      ]
+    }
+  };
+
+  _gb(cat,l){ const m={ hub:['obszar kompetencji organizacji','an organizational capability area'], design:['regu\u0142a systemu designu','a design-system rule'], android:['wzorzec architektury Android/KMP','an Android/KMP architecture pattern'], bridge:['most z designu do kodu','a design-to-code bridge'], unity:['wzorzec Unity / AR / UaaL','a Unity / AR / UaaL pattern'], workflow:['krok orkiestracji pracy','a work-orchestration step'], agent:['wyspecjalizowany agent','a specialised agent'], integrity:['regu\u0142a rzetelno\u015bci','an integrity rule'], engineering:['regu\u0142a in\u017cynierska','an engineering rule'], audit:['mechanizm audytu jako\u015bci','a quality-audit mechanism'], process:['proces / synchronizacja','a process / sync'], knowledge:['notatka o loop engineeringu','a loop-engineering note'], project:['projekt','a project'] }; const e=m[cat]||['element','an item']; return l==='pl'?e[0]:e[1]; }
+  _expandGraph(){
+    const have=new Set(this.nodes.map(n=>n.id));
+    const addN=(id,label,cat)=>{ if(have.has(id))return; have.add(id); this.nodes.push({id,label,cat,pl:this._gb(cat,'pl'),en:this._gb(cat,'en')}); };
+    const addE=(s,t,r)=>{ this.edges.push({s,t,pl:r[0],en:r[1]}); };
+    const AREA=['obszar','area'], HAS=['zawiera','contains'], USES=['u\u017cywa','uses'], GOV=['rz\u0105dzi','governs'];
+    addN('mocskille','MOC \u00b7 Skille','hub');
+    const hubs=[
+      ['h_kmp','KMP \u00b7 sie\u0107 i testy','android',['kmp-network-layer','kmp-mock-real-swap','kmp-flavors-environments','kmp-snapshot-testing','local-snapshots','browser-qa']],
+      ['h_dsf','Design system \u00b7 fundament','design',['design-source-of-truth','semantic-tokens','component-parity','living-stylebook','sprites-first','design-system']],
+      ['h_lingua','Design \u00b7 LinguaNotes','design',['lingua-components']],
+      ['h_platana','Design \u00b7 Platana','design',['botanical-tokens','ink-botanicals','botanical-motion','botanical-not-kitsch','platana-components']],
+      ['h_unpluq','Design \u00b7 Unpluq','design',['unpluq-components','friction-tokens','friction-motion','friction-not-kitsch','product-lens','frontend-slides','frontend-patterns']],
+      ['h_makeit','Design \u00b7 MakeIt & BakeIt','design',['candy-components','edible-colors','notification-badges','toasts','calm-palette','mech-icons']],
+      ['h_android','Android i KMP \u00b7 architektura','android',['android-navigation','android-testing','android-error-handling','android-di-koin','android-data-layer','android-compose-ui','android-presentation-mvi','android-module-structure']],
+      ['h_disc','Dyscyplina in\u017cynierska','engineering',['error-codes-pattern','commit-messages','interface-oriented-boundaries','reuse-over-duplication','versioning','update-plan','code-documentation','minimize-boolean-state','solid-principles']],
+      ['h_workflow','Workflow, review i orkiestracja','workflow',['task-decomposition','develop-test-review-workflow','feature-developer|agent','test-writer|agent','code-reviewer|agent','root-cause-analysis|integrity','anti-hallucination|integrity','deep-review|audit','deep-review-max|audit','skill-test|audit','propose-improvement|audit','ci-summary|audit','refresh-skills|process','verify-feature-walkthrough','orgskills-sync|process','org-statusline|process','export-org-skills|process']],
+      ['h_bridge','Design \u2192 kod','bridge',['design-to-unity','design-to-compose','design-to-swiftui','design-compose-parity','design-swiftui-parity']],
+      ['h_unity','Unity, AR i UaaL','unity',['unity-ar-ratio','unity-ar-patterns','unity-uaal-ios-framework','unity-csharp-quality','unity-uaal-android-holder','unity-bridge-kmp']],
+      ['h_loop','Loop engineering','knowledge',['keys-not-prompts','knowledge-vs-execution','test-4-conditions','maker-checker','state-file','ralph-wiggum','comprehension-debt','goodhart-law']],
+      ['h_agentic','MOC \u00b7 Wzorce agentowe','knowledge',['agentic-patterns-gulli','patterns-to-build']]
+    ];
+    hubs.forEach(h=>{ addN(h[0],h[1],'hub'); addE('mocskille',h[0],AREA); h[3].forEach(c=>{ const pa=c.split('|'); addN(pa[0],pa[0],pa[1]||h[2]); addE(h[0],pa[0],HAS); }); });
+    addN('h_proj','MOC \u00b7 Projekty','hub'); addE('mocskille','h_proj',AREA);
+    ['makeitbakeit','platana','makeit-ar'].forEach(p=>{ if(have.has(p)) addE('h_proj',p,HAS); });
+    const PL={ makeitbakeit:['h_makeit','h_android','h_workflow','h_bridge'], platana:['h_platana','h_workflow','h_bridge','h_disc'], 'makeit-ar':['h_unity','h_bridge'] };
+    Object.keys(PL).forEach(pid=>{ if(have.has(pid)) PL[pid].forEach(t=>{ if(have.has(t)) addE(pid,t,USES); }); });
+    [['design-source-of-truth','h_platana'],['design-source-of-truth','h_unpluq'],['design-source-of-truth','h_makeit'],['design-source-of-truth','h_lingua']].forEach(e=>{ if(have.has(e[0])&&have.has(e[1])) addE(e[0],e[1],GOV); });
+  }
+  ensureLayout(){
+    if(!this._expanded){ this._expanded=true; this._expandGraph(); }
+    if(this.pos) return;
+    this.byId = {}; this.nodes.forEach(n=>this.byId[n.id]=n);
+    this.deg = {}; this.nodes.forEach(n=>this.deg[n.id]=0);
+    this.edges.forEach(e=>{ this.deg[e.s]++; this.deg[e.t]++; });
+    this.rad = {}; this.nodes.forEach(nd=>{ this.rad[nd.id]=nd.cat==='project'?22:(9+Math.min(13,(this.deg[nd.id]||1)*1.6)); });
+    const idx={}; this.nodes.forEach((n,i)=>idx[n.id]=i);
+    const n=this.nodes.length, W=1180, H=800;
+    let seed=7; const rnd=()=>{ seed=(seed*9301+49297)%233280; return seed/233280; };
+    const P=this.nodes.map(()=>({x:rnd()*W, y:rnd()*H}));
+    const k=Math.sqrt((W*H)/n)*0.98; let t=W*0.14;
+    for(let it=0; it<660; it++){
+      const d=P.map(()=>({x:0,y:0}));
+      for(let a=0;a<n;a++){ for(let b=a+1;b<n;b++){
+        let dx=P[a].x-P[b].x, dy=P[a].y-P[b].y, dist=Math.sqrt(dx*dx+dy*dy)||0.01;
+        let f=k*k/dist, ux=dx/dist, uy=dy/dist;
+        d[a].x+=ux*f; d[a].y+=uy*f; d[b].x-=ux*f; d[b].y-=uy*f;
+      }}
+      this.edges.forEach(e=>{ const a=idx[e.s], b=idx[e.t];
+        let dx=P[a].x-P[b].x, dy=P[a].y-P[b].y, dist=Math.sqrt(dx*dx+dy*dy)||0.01;
+        let f=dist*dist/k, ux=dx/dist, uy=dy/dist;
+        d[a].x-=ux*f; d[a].y-=uy*f; d[b].x+=ux*f; d[b].y+=uy*f;
+      });
+      for(let a=0;a<n;a++){ d[a].x-=(P[a].x-W/2)*0.019; d[a].y-=(P[a].y-H/2)*0.019; }
+      for(let a=0;a<n;a++){ let dl=Math.sqrt(d[a].x*d[a].x+d[a].y*d[a].y)||0.01;
+        P[a].x+=d[a].x/dl*Math.min(dl,t); P[a].y+=d[a].y/dl*Math.min(dl,t); }
+      t*=0.985;
+    }
+    let mnx=1e9,mny=1e9,mxx=-1e9,mxy=-1e9;
+    P.forEach(p=>{ mnx=Math.min(mnx,p.x); mny=Math.min(mny,p.y); mxx=Math.max(mxx,p.x); mxy=Math.max(mxy,p.y); });
+    const pad=74, s=Math.min((W-pad*2)/((mxx-mnx)||1),(H-pad*2)/((mxy-mny)||1));
+    const ox=(W-(mxx-mnx)*s)/2, oy=(H-(mxy-mny)*s)/2;
+    this.pos={}; this.nodes.forEach((nd,i)=>{ this.pos[nd.id]={ x:ox+(P[i].x-mnx)*s, y:oy+(P[i].y-mny)*s }; });
+    // collision resolution: push apart any overlapping nodes (account for radii + label room)
+    const ids=this.nodes.map(nd=>nd.id), margin=20;
+    for(let it=0; it<160; it++){
+      let moved=false;
+      for(let a=0;a<n;a++){ for(let b=a+1;b<n;b++){
+        const A=this.pos[ids[a]], B=this.pos[ids[b]];
+        let dx=B.x-A.x, dy=B.y-A.y, dist=Math.sqrt(dx*dx+dy*dy)||0.01;
+        const minD=this.rad[ids[a]]+this.rad[ids[b]]+margin;
+        if(dist<minD){ const push=(minD-dist)/2, ux=dx/dist, uy=dy/dist;
+          A.x-=ux*push; A.y-=uy*push; B.x+=ux*push; B.y+=uy*push; moved=true; }
+      }}
+      if(!moved) break;
+    }
+    this.nodes.forEach(nd=>{ const p=this.pos[nd.id], r=this.rad[nd.id];
+      p.x=Math.max(r+10,Math.min(W-r-10,p.x)); p.y=Math.max(r+10,Math.min(H-r-22,p.y)); });
+  }
+
+  startDrag = (e,id)=>{
+    e.preventDefault();
+    this.dragId=id; this._dragMoved=false;
+    window.addEventListener('pointermove', this._mv);
+    window.addEventListener('pointerup', this._up);
+  };
+  _mv = (e)=>{
+    if(!this.dragId) return;
+    const svg=document.getElementById('klnGraphSvg'); if(!svg) return;
+    const pt=svg.createSVGPoint(); pt.x=e.clientX; pt.y=e.clientY;
+    const loc=pt.matrixTransform(svg.getScreenCTM().inverse());
+    this.pos[this.dragId]={x:loc.x,y:loc.y}; this._dragMoved=true;
+    this.forceUpdate();
+  };
+  _up = ()=>{
+    this.dragId=null;
+    window.removeEventListener('pointermove', this._mv);
+    window.removeEventListener('pointerup', this._up);
+  };
+
+  selectNode(nd, x, y){
+    if(this._dragMoved){ this._dragMoved=false; return; }
+    this.setState({ sel:nd.id, zoomed:true });
+    this.ripple(x, y);
+    this.zoomTo(x, y);
+  }
+  _soft(hex,a){ const h=hex.replace('#',''); const n=parseInt(h.length===3?h.split('').map(c=>c+c).join(''):h,16); return 'rgba('+((n>>16)&255)+','+((n>>8)&255)+','+(n&255)+','+a+')'; }
+  zoomTo(x, y){
+    const svg=document.getElementById('klnGraphSvg'); if(!svg) return;
+    const zw=1180/2.3, zh=800/2.3;
+    let tx=Math.max(0,Math.min(1180-zw, x-zw/2)), ty=Math.max(0,Math.min(800-zh, y-zh/2));
+    this._tweenVB(svg,[tx,ty,zw,zh]);
+  }
+  zoomReset(){ this.setState({zoomed:false}); const svg=document.getElementById('klnGraphSvg'); if(svg) this._tweenVB(svg,[0,0,1180,800]); }
+  _tweenVB(svg, target){
+    const cur=(svg.getAttribute('viewBox')||'0 0 1180 800').split(/\s+/).map(Number);
+    cancelAnimationFrame(this._vbRAF);
+    const st=performance.now(), dur=720, ease=t=>1-Math.pow(1-t,3);
+    const step=now=>{ const p=Math.min(1,(now-st)/dur), e=ease(p);
+      svg.setAttribute('viewBox', cur.map((c,i)=>c+(target[i]-c)*e).join(' '));
+      if(p<1) this._vbRAF=requestAnimationFrame(step); };
+    this._vbRAF=requestAnimationFrame(step);
+  }
+  ripple(x, y){
+    const g=document.getElementById('kln-ripples'); if(!g) return;
+    const NS='http://www.w3.org/2000/svg';
+    for(let k=0;k<3;k++){
+      const c=document.createElementNS(NS,'circle');
+      c.setAttribute('cx',x); c.setAttribute('cy',y); c.setAttribute('r',6);
+      c.setAttribute('fill','none'); c.setAttribute('stroke','#ECB87D'); c.setAttribute('stroke-width',2);
+      c.style.animation='klnRipple 1.15s cubic-bezier(.2,.7,.3,1) '+(k*0.16)+'s forwards';
+      g.appendChild(c); setTimeout(()=>c.remove(), 1500);
+    }
+  }
+
+  componentDidMount(){ this._wire(); }
+  componentDidUpdate(){ this._wire(); }
+  _wire(){
+    if(this._fx) return; this._fx=true;
+    const $$=s=>Array.from(document.querySelectorAll(s));
+    window.addEventListener('pointermove',(e)=>{ const g=document.getElementById('klntech-glow'); if(g) g.style.transform='translate('+e.clientX+'px,'+e.clientY+'px)'; },{passive:true});
+    // count-up
+    this._countObs=new IntersectionObserver((ents)=>{ ents.forEach((en)=>{ if(en.isIntersecting && !en.target._done){ en.target._done=true; const tg=parseInt(en.target.dataset.count,10)||0, dur=1100, st=performance.now(); const tick=(now)=>{ const p=Math.min(1,(now-st)/dur); en.target.textContent=Math.round(tg*(1-Math.pow(1-p,3))); if(p<1) requestAnimationFrame(tick); }; requestAnimationFrame(tick); } }); },{threshold:.4});
+    $$('.klnCount').forEach((el)=>this._countObs.observe(el));
+    // magnetic buttons
+    $$('[data-magnetic]').forEach(b=>{ b.addEventListener('pointermove',e=>{ const r=b.getBoundingClientRect(); const x=e.clientX-r.left-r.width/2, y=e.clientY-r.top-r.height/2; b.style.transform='translate('+x*0.3+'px,'+y*0.45+'px)'; }); b.addEventListener('pointerleave',()=>{ b.style.transform=''; }); });
+    // 3D tilt + glare on capability cards
+    $$('[data-tilt3d]').forEach(c=>{ const g=c.querySelector('[data-glare]'); c.addEventListener('pointermove',e=>{ const r=c.getBoundingClientRect(); const px=(e.clientX-r.left)/r.width, py=(e.clientY-r.top)/r.height; c.style.transform='perspective(800px) rotateY('+((px-.5)*11)+'deg) rotateX('+(-(py-.5)*11)+'deg) scale(1.03)'; if(g) g.style.background='radial-gradient(circle at '+(px*100)+'% '+(py*100)+'%, rgba(255,255,255,.13), transparent 55%)'; }); c.addEventListener('pointerleave',()=>{ c.style.transform=''; if(g) g.style.background='none'; }); });
+    // spotlight
+    $$('[data-spotlight]').forEach(c=>{ c.addEventListener('pointermove',e=>{ const r=c.getBoundingClientRect(); c.style.setProperty('--mx',(e.clientX-r.left)+'px'); c.style.setProperty('--my',(e.clientY-r.top)+'px'); }); });
+    $$('[data-ripple]').forEach(b=>{ b.addEventListener('pointerdown',e=>{ const r=b.getBoundingClientRect(); const s=document.createElement('span'); s.style.cssText='position:absolute;left:'+(e.clientX-r.left)+'px;top:'+(e.clientY-r.top)+'px;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.5);transform:translate(-50%,-50%);pointer-events:none'; b.appendChild(s); s.animate([{width:'6px',height:'6px',opacity:.5},{width:'280px',height:'280px',opacity:0}],{duration:620,easing:'ease-out'}).onfinish=()=>s.remove(); }); });
+    // hero constellation
+    const cv=document.getElementById('kln-net');
+    if(cv){ const ctx=cv.getContext('2d'); const DPR=Math.min(2,window.devicePixelRatio||1); let w=1,h=1;
+      const resize=()=>{ const r=cv.getBoundingClientRect(); w=cv.width=Math.max(1,r.width*DPR); h=cv.height=Math.max(1,r.height*DPR); }; resize();
+      const N=34; const pts=[...Array(N)].map(()=>({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.3*DPR,vy:(Math.random()-.5)*.3*DPR}));
+      let mx=-1e4,my=-1e4; window.addEventListener('pointermove',e=>{ const r=cv.getBoundingClientRect(); mx=(e.clientX-r.left)*DPR; my=(e.clientY-r.top)*DPR; });
+      const loop=()=>{ ctx.clearRect(0,0,w,h);
+        for(const p of pts){ p.x+=p.vx; p.y+=p.vy; if(p.x<0||p.x>w)p.vx*=-1; if(p.y<0||p.y>h)p.vy*=-1; const dx=p.x-mx,dy=p.y-my,d=Math.hypot(dx,dy); if(d<110*DPR&&d>0){ p.x+=dx/d*1.2; p.y+=dy/d*1.2; } }
+        for(let i=0;i<N;i++){ for(let j=i+1;j<N;j++){ const a=pts[i],b=pts[j],dd=Math.hypot(a.x-b.x,a.y-b.y); if(dd<120*DPR){ ctx.strokeStyle='rgba(216,149,72,'+(1-dd/(120*DPR))*0.5+')'; ctx.lineWidth=DPR; ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke(); } } }
+        for(const p of pts){ ctx.fillStyle='rgba(236,184,125,.85)'; ctx.beginPath(); ctx.arc(p.x,p.y,1.5*DPR,0,7); ctx.fill(); }
+        requestAnimationFrame(loop); };
+      loop(); window.addEventListener('resize',resize); }
+  }
+
+  renderVals(){
+    this.ensureLayout();
+    const {lang,theme,dir,sel,hover,filter}=this.state;
+    const t=this.C[lang];
+    const isDark=theme==='dark';
+    const dark="--bg-page:#14110E;--bg-elevated:#1E1A16;--ink:#F4ECDD;--ink-2:#C7BBA6;--ink-3:#8A7E6C;--hairline:rgba(244,236,221,.12);--glass:rgba(30,26,22,.55);--accent:#D89548;--accent-soft:#ECB87D;--accent-strong:#B5772E;--cherry:#DC3D3D;--makeit:#D89548;--platana:#5B8C5A;--water:#4E7FA8;--copper:#9C5B2E;";
+    const light="--bg-page:#F6F1E6;--bg-elevated:#FBF7EC;--ink:#211B14;--ink-2:#5A4E3E;--ink-3:#8A7E6C;--hairline:rgba(33,27,20,.13);--glass:rgba(251,247,236,.6);--accent:#B5772E;--accent-soft:#A8662A;--accent-strong:#8A5A20;--cherry:#C23434;--makeit:#B5772E;--platana:#4E7A4D;--water:#3E6E96;--copper:#9C5B2E;";
+    const graphMode=dir==='graph';
+
+    const nb=new Set();
+    if(hover){ this.edges.forEach(e=>{ if(e.s===hover)nb.add(e.t); if(e.t===hover)nb.add(e.s); }); nb.add(hover); }
+
+    const gnodes=this.nodes.map((nd,i)=>{
+      const p=this.pos[nd.id], isP=nd.cat==='project';
+      const r=this.rad[nd.id];
+      const gstyle='cursor:grab;transform-box:fill-box;transform-origin:center;animation:klnPulseNode '+(3+(i%5)*0.5)+'s ease-in-out infinite;animation-delay:'+(-(i%7)*0.6)+'s';
+      const inF=!filter||nd.cat===filter;
+      let op=1; if(hover) op=nb.has(nd.id)?1:0.13; if(!inF) op=0.06;
+      let show = isP || nd.cat==='hub';
+      if(hover) show = nb.has(nd.id);
+      if(filter) show = inF;
+      if(sel===nd.id) show=true;
+      const hot = sel===nd.id || (hover && nb.has(nd.id));
+      const color=this.catColor[nd.cat]; const cw=Math.max(5,r*0.66);
+      return { id:nd.id, label:nd.label, color, isP, notP:!isP,
+        cx:p.x, cy:p.y, r, rx:p.x-r, ry:p.y-r, w:r*2, h:r*2, rrx:Math.round(r*0.4),
+        fillSoft:this._soft(color, sel===nd.id?0.34:(hot?0.24:0.13)), coreR:Math.max(2,r*0.32), cw, crx:p.x-cw/2, cry:p.y-cw/2,
+        haloR:r*1.9, halo:((hot?0.5:0.2)*op).toFixed(2),
+        tx:p.x, ty:p.y+r+14, fs:isP?15:11, gstyle,
+        op, lop: show ? (op>0.3?0.92:0) : 0,
+        stroke: sel===nd.id?'#F4ECDD':color, sw: sel===nd.id?2.4:1.5,
+        onSel:()=>this.selectNode(nd, p.x, p.y), onHov:()=>this.setState({hover:nd.id}), onDown:(e)=>this.startDrag(e,nd.id) };
+    });
+    const gedges=this.edges.map(e=>{
+      const A=this.pos[e.s], B=this.pos[e.t];
+      const onH=hover&&(e.s===hover||e.t===hover), onS=(e.s===sel||e.t===sel);
+      const inF=!filter||(this.byId[e.s].cat===filter||this.byId[e.t].cat===filter);
+      let so=0.2, sc='#6B6354', w=1, dash='none', anim='';
+      if(onH||onS){ so=0.9; sc='#ECB87D'; w=2; dash='7 9'; anim='animation:klnDash .9s linear infinite'; }
+      if(!inF) so=0.04;
+      return { x1:A.x, y1:A.y, x2:B.x, y2:B.y, sc, so, w, dash, anim };
+    });
+
+    const sNode=this.byId[sel];
+    const panelConns=[];
+    this.edges.forEach(e=>{ if(e.s===sel) panelConns.push({l:this.byId[e.t].label, r:e[lang]}); if(e.t===sel) panelConns.push({l:this.byId[e.s].label, r:e[lang]}); });
+    const panelBlurb=(lang==='pl'?sNode.pl:sNode.en);
+    const sp=this.pos[sel]||{x:590,y:400}; const cardRight=sp.x>600;
+    const selCard={ x: cardRight? sp.x-242 : sp.x+(this.rad[sel]||12)+10, y: Math.max(8,Math.min(636, sp.y-48)), title:sNode.label, cat:this.catLabel[sNode.cat][lang], blurb:panelBlurb, color:this.catColor[sNode.cat] };
+
+    const legend=Object.keys(this.catColor).map(kk=>{
+      const active=filter===kk, col=this.catColor[kk];
+      return { key:kk, label:this.catLabel[kk][lang], color:col,
+        bg: active?'color-mix(in srgb,'+col+' 22%, transparent)':'transparent',
+        fg: active?'#F4ECDD':'#C7BBA6', bd: active?col:'rgba(244,236,221,.12)',
+        onClick:()=>this.setState(st=>({filter: st.filter===kk?null:kk})) };
+    });
+
+    return Object.assign({}, t, {
+      lang, theme, isDark, isLight:!isDark, rootStyle:isDark?dark:light, pageBg:isDark?'#14110E':'#F6F1E6',
+      heroAlign: graphMode?'margin:0 auto;text-align:center':'text-align:left',
+      heroPMargin: graphMode?'margin-left:auto;margin-right:auto':'',
+      heroRow: graphMode?'justify-content:center':'',
+      ambientOpacity: graphMode?0.24:0.10, ambientOpacity2: graphMode?0.85:0.5,
+      langBtn: lang==='pl'?'EN':'PL',
+      dirBtn: graphMode? t.dirBtnBack : t.dirBtnTo,
+      dirTitle: graphMode? t.dirGraph : t.dirAtelier,
+      toggleLang:()=>this.setState(st=>({lang: st.lang==='pl'?'en':'pl'})),
+      toggleTheme:()=>this.setState(st=>({theme: st.theme==='dark'?'light':'dark'})),
+      toggleDir:()=>this.setState(st=>({dir: st.dir==='atelier'?'graph':'atelier'})),
+      clearHover:()=>this.setState({hover:null}),
+      zoomReset:()=>this.zoomReset(),
+      selCard, showCard:this.state.zoomed,
+      gnodes, gedges, legend, panelConns, panelBlurb,
+      panelCat:this.catLabel[sNode.cat][lang], panelColor:this.catColor[sNode.cat], panelTitle:sNode.label,
+      stats:[ {n:'2',label: lang==='pl'?'flagowe produkty':'flagship products'},
+        {n:'216',label: lang==='pl'?'rycin w Platanie':'plates in Platana'},
+        {n:'121',label: lang==='pl'?'testów (Platana)':'tests (Platana)'},
+        {n:String(this.nodes.length),label: lang==='pl'?'zdolności w grafie':'capabilities mapped'} ],
+      mibPills:['Kotlin MP','Unity 6 AR','Spring Boot','Stripe Connect'],
+      platPills:['SwiftUI','SwiftData','StoreKit 2', lang==='pl'?'216 rycin':'216 plates']
+    });
+  }
+}
+</script>
+</body>
+</html>

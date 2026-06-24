@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;-webkit-font-smoothing:antialiased}
+@keyframes labMarquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes labUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+@keyframes labSpin{to{transform:rotate(360deg)}}
+@keyframes labCube{from{transform:rotateX(-22deg) rotateY(0)}to{transform:rotateX(-22deg) rotateY(360deg)}}
+@keyframes labEq{0%,100%{transform:scaleY(.25)}50%{transform:scaleY(1)}}
+@keyframes labDraw{0%{stroke-dashoffset:400}45%{stroke-dashoffset:0}55%{stroke-dashoffset:0}100%{stroke-dashoffset:-400}}
+@keyframes labBlob{0%,100%{border-radius:42% 58% 63% 37%/42% 41% 59% 58%}50%{border-radius:62% 38% 38% 62%/55% 62% 38% 45%}}
+@keyframes labCaret{0%,100%{opacity:1}50%{opacity:0}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important}}
+@media(hover:none){#lab-cursor{display:none}}
+</style>
+</helmet>
+<div style="min-height:100vh;background:#14110E;color:#F4ECDD;font-family:'Inter',system-ui,sans-serif;line-height:1.6;position:relative;overflow-x:hidden">
+
+  <div id="lab-cursor" style="position:fixed;top:0;left:0;width:26px;height:26px;margin:-13px 0 0 -13px;border:1px solid var(--accent,#D89548);border-radius:50%;pointer-events:none;z-index:90;transition:scale .2s ease;mix-blend-mode:difference"></div>
+  <div id="lab-glow" style="position:fixed;top:0;left:0;width:460px;height:460px;margin:-230px 0 0 -230px;border-radius:50%;background:radial-gradient(circle,rgba(216,149,72,.13),transparent 62%);pointer-events:none;z-index:0;filter:blur(26px)"></div>
+
+  <nav style="position:sticky;top:0;z-index:50;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);background:rgba(20,17,14,.74);border-bottom:1px solid rgba(244,236,221,.12)">
+    <div style="max-width:1180px;margin:0 auto;padding:0 28px;height:66px;display:flex;align-items:center;gap:20px">
+      <a href="KLNTech.dc.html" data-cursor style="display:inline-flex;align-items:center;gap:8px;color:#C7BBA6;text-decoration:none;font-size:14px;transition:color .2s" style-hover="color:#F4ECDD"><span style="font-size:17px">←</span> KLNTech</a>
+      <div style="margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#8A7E6C">/lab</div>
+      <button onClick="{{toggleLang}}" data-cursor style="margin-left:auto;border:1px solid rgba(244,236,221,.16);background:transparent;color:#C7BBA6;border-radius:999px;padding:8px 14px;font-size:13px;cursor:pointer;font-family:inherit;transition:all .2s" style-hover="border-color:#D89548;color:#F4ECDD">{{langBtn}}</button>
+    </div>
+  </nav>
+
+  <header style="position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:84px 28px 40px">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#ECB87D">{{eyebrow}}</div>
+    <h1 style="font-family:'Fraunces',serif;font-weight:600;font-size:clamp(2.6rem,1.6rem+4vw,4.6rem);line-height:1.02;margin:16px 0 0;letter-spacing:-.02em">{{title}}</h1>
+    <p style="font-size:clamp(1.05rem,.98rem+.4vw,1.28rem);color:#C7BBA6;max-width:60ch;margin:20px 0 0">{{sub}}</p>
+  </header>
+
+  <section style="position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:30px 28px 100px;display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px">
+
+    <div style="border:1px solid rgba(244,236,221,.12);background:rgba(30,26,22,.5);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:18px;padding:20px;overflow:hidden">
+      <div style="height:170px;display:flex;align-items:center;justify-content:center;perspective:800px">
+        <div data-tilt3d data-cursor style="position:relative;width:130px;height:130px;border-radius:20px;background:linear-gradient(150deg,#D89548,#9C5B2E);box-shadow:0 20px 50px rgba(216,149,72,.3);display:flex;align-items:center;justify-content:center;transition:transform .15s ease;transform-style:preserve-3d">
+          <span style="font-family:'Fraunces',serif;font-weight:600;font-size:3rem;color:#1A1206">K</span>
+          <div data-glare style="position:absolute;inset:0;border-radius:20px;pointer-events:none"></div>
+        </div>
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:#8A7E6C;margin-top:6px">01</div>
+      <h3 style="font-family:'Fraunces',serif;font-weight:600;font-size:1.18rem;margin:6px 0 6px">{{f0t}}</h3>
+      <p style="margin:0;font-size:.9rem;color:#C7BBA6">{{f0d}}</p>
+    </div>
+
+    <div style="border:1px solid rgba(244,236,221,.12);background:rgba(30,26,22,.5);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:18px;padding:20px;overflow:hidden">
+      <div data-magzone style="height:170px;display:flex;align-items:center;justify-content:center">
+        <button data-magnetic data-cursor style="background:var(--accent,#D89548);color:#1A1206;border:none;font-weight:600;border-radius:999px;padding:15px 28px;font-size:15px;cursor:pointer;transition:transform .25s cubic-bezier(.2,1,.3,1)">{{magLabel}}</button>
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:#8A7E6C;margin-top:6px">02</div>
+      <h3 style="font-family:'Fraunces',serif;font-weight:600;font-size:1.18rem;margin:6px 0 6px">{{f1t}}</h3>
+      <p style="margin:0;font-size:.9rem;color:#C7BBA6">{{f1d}}</p>
+    </div>
+
+    <div data-spotlight data-cursor style="position:relative;border:1px solid rgba(244,236,221,.12);background:rgba(30,26,22,.5);border-radius:18px;padding:20px;overflow:hidden;cursor:crosshair">
+      <div style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(220px circle at var(--mx,50%) var(--my,30%), rgba(216,149,72,.28), transparent 60%)"></div>
+      <div style="position:relative;height:170px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:#C7BBA6">{{spotLabel}}</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:#8A7E6C;margin-top:6px;position:relative">03</div>
+      <h3 style="font-family:'Fraunces',serif;font-weight:600;font-size:1.18rem;margin:6px 0 6px;position:relative">{{f2t}}</h3>
+      <p style="margin:0;font-size:.9rem;color:#C7BBA6;position:relative">{{f2d}}</p>
+    </div>
+
+    <div style="border:1px solid rgba(244,236,221,.12);background:rgba(30,26,22,.5);border-radius:18px;padding:20px;overflow:hidden">
+      <div data-cursor style="height:170px;display:flex;align-items:center;justify-content:center">
+        <span data-scramble="KLNTECH" style="font-family:'JetBrains Mono',monospace;font-size:2rem;font-weight:500;color:#ECB87D;letter-spacing:.06em;cursor:default">KLNTECH</span>
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:#8A7E6C;margin-top:6px">04</div>
+      <h3 style="font-family:'Fraunces',serif;font-weight:600;font-size:1.18rem;margin:6px 0 6px">{{f3t}}</h3>
+      <p style="margin:0;font-size:.9rem;color:#C7BBA6">{{f3d}}</p>
+    </div>
+
+    <div style="border:1px solid rgba(244,236,221,.12);background:rgba(30,26,22,.5);border-radius:18px;padding:20px;overflow:hidden">
+      <div style="height:170px;display:flex;flex-direction:column;justify-content:center;gap:14px;overflow:hidden;-webkit-mask:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)">
+        <div style="display:flex;gap:14px;width:max-content;animation:labMarquee 18s linear infinite">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#C7BBA6;border:1px solid rgba(244,236,221,.14);border-radius:999px;padding:7px 14px;white-space:nowrap">SwiftUI</span><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#C7BBA6;border:1px solid rgba(244,236,221,.14);border-radius:999px;padding:7px 14px;white-space:nowrap">Kotlin MP</span><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#C7BBA6;border:1px solid rgba(244,236,221,.14);border-radius:999px;padding:7px 14px;white-space:nowrap">Unity AR</span><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#C7BBA6;border:1px solid rgba(244,236,221,.14);border-radius:999px;padding:7px 14px;white-space:nowrap">Spring Boot</span><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#C7BBA6;border:1px solid rgba(244,236,221,.14);border-radius:999px;padding:7px 14px;white-space:nowrap">SwiftUI</span><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#C7BBA6;border:1px solid rgba(244,236,221,.14);border-radius:999px;padding:7px 14px;white-space:nowrap">Kotlin MP</span><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#C7BBA6;border:1px solid rgba(244,236,221,.14);border-radius:999px;padding:7px 14px;white-space:nowrap">Unity AR</span><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#C7BBA6;border:1px solid rgba(244,236,221,.14);border-radius:999px;padding:7px 14px;white-space:nowrap">Spring Boot</span>
+        </div>
+        <div style="display:flex;gap:14px;width:max-content;animation:labMarquee 24s linear infinite reverse">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#8A7E6C;border:1px solid rgba(244,236,221,.1);border-radius:999px;padding:7px 14px;white-space:nowrap">Stripe Connect</span><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#8A7E6C;border:1px solid rgba(244,236,221,.1);border-radius:999px;padding:7px 14px;white-space:nowrap">PostgreSQL</span><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#8A7E6C;border:1px solid rgba(244,236,221,.1);border-radius:999px;padding:7px 14px;white-space:nowrap">Compose MP</span><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#8A7E6C;border:1px solid rgba(244,236,221,.1);border-radius:999px;padding:7px 14px;white-space:nowrap">SwiftData</span><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#8A7E6C;border:1px solid rgba(244,236,221,.1);border-radius:999px;padding:7px 14px;white-space:nowrap">Stripe Connect</span><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#8A7E6C;border:1px solid rgba(244,236,221,.1);border-radius:999px;padding:7px 14px;white-space:nowrap">PostgreSQL</span><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#8A7E6C;border:1px solid rgba(244,236,221,.1);border-radius:999px;padding:7px 14px;white-space:nowrap">Compose MP</span><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#8A7E6C;border:1px solid rgba(244,236,221,.1);border-radius:999px;padding:7px 14px;white-space:nowrap">SwiftData</span>
+        </div>
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:#8A7E6C;margin-top:6px">05</div>
+      <h3 style="font-family:'Fraunces',serif;font-weight:600;font-size:1.18rem;margin:6px 0 6px">{{f4t}}</h3>
+      <p style="margin:0;font-size:.9rem;color:#C7BBA6">{{f4d}}</p>
+    </div>
+
+    <div style="border:1px solid rgba(244,236,221,.12);background:rgba(30,26,22,.5);border-radius:18px;padding:20px;overflow:hidden">
+      <div style="height:170px;display:flex;align-items:center;justify-content:center;gap:6px">
+        <span class="labCount" data-count="216" style="font-family:'Fraunces',serif;font-weight:600;font-size:3.4rem;color:#ECB87D;line-height:1">0</span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#8A7E6C;align-self:flex-end;padding-bottom:14px">{{countUnit}}</span>
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:#8A7E6C;margin-top:6px">06</div>
+      <h3 style="font-family:'Fraunces',serif;font-weight:600;font-size:1.18rem;margin:6px 0 6px">{{f5t}}</h3>
+      <p style="margin:0;font-size:.9rem;color:#C7BBA6">{{f5d}}</p>
+    </div>
+
+    <div data-cursor style="border:1px solid rgba(244,236,221,.12);background:rgba(30,26,22,.5);border-radius:18px;padding:20px;overflow:hidden">
+      <div style="height:170px;border-radius:12px;overflow:hidden;background:#0E0B09"><canvas id="lab-net" style="width:100%;height:100%;display:block"></canvas></div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:#8A7E6C;margin-top:6px">07</div>
+      <h3 style="font-family:'Fraunces',serif;font-weight:600;font-size:1.18rem;margin:6px 0 6px">{{f6t}}</h3>
+      <p style="margin:0;font-size:.9rem;color:#C7BBA6">{{f6d}}</p>
+    </div>
+
+    <div style="border:1px solid rgba(244,236,221,.12);background:rgba(30,26,22,.5);border-radius:18px;padding:20px;overflow:hidden">
+      <div style="height:170px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px">
+        <div data-skew style="width:150px;height:14px;border-radius:7px;background:linear-gradient(90deg,#D89548,#CC5570);transition:transform .12s ease-out"></div>
+        <div data-skew style="width:110px;height:14px;border-radius:7px;background:linear-gradient(90deg,#ECB87D,#9C5B2E);transition:transform .12s ease-out"></div>
+        <div data-skew style="width:130px;height:14px;border-radius:7px;background:linear-gradient(90deg,#7FA46A,#4E7FA8);transition:transform .12s ease-out"></div>
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:#8A7E6C;margin-top:6px">08</div>
+      <h3 style="font-family:'Fraunces',serif;font-weight:600;font-size:1.18rem;margin:6px 0 6px">{{f7t}}</h3>
+      <p style="margin:0;font-size:.9rem;color:#C7BBA6">{{f7d}}</p>
+    </div>
+
+    <div style="border:1px solid rgba(244,236,221,.12);background:rgba(30,26,22,.5);border-radius:18px;padding:20px;overflow:hidden">
+      <div style="height:170px;display:flex;align-items:center;justify-content:center">
+        <div data-drag data-cursor style="width:96px;height:96px;border-radius:22px;background:linear-gradient(150deg,#CC5570,#8E2E45);box-shadow:0 16px 40px rgba(204,85,112,.32);display:flex;align-items:center;justify-content:center;cursor:grab;touch-action:none;font-family:'JetBrains Mono',monospace;font-size:11px;color:#fff;text-align:center">{{dragLabel}}</div>
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:#8A7E6C;margin-top:6px">09</div>
+      <h3 style="font-family:'Fraunces',serif;font-weight:600;font-size:1.18rem;margin:6px 0 6px">{{f8t}}</h3>
+      <p style="margin:0;font-size:.9rem;color:#C7BBA6">{{f8d}}</p>
+    </div>
+
+    <div style="border:1px solid rgba(244,236,221,.12);background:rgba(30,26,22,.5);border-radius:18px;padding:20px;overflow:hidden">
+      <div style="height:170px;display:flex;align-items:center;justify-content:center;perspective:900px">
+        <div data-flip data-cursor style="position:relative;width:130px;height:130px;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.3,1,.3,1);cursor:pointer">
+          <div style="position:absolute;inset:0;backface-visibility:hidden;border-radius:18px;background:linear-gradient(150deg,#1E1A16,#0E0B09);border:1px solid rgba(244,236,221,.14);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:12px;color:#C7BBA6">{{flipFront}}</div>
+          <div style="position:absolute;inset:0;backface-visibility:hidden;transform:rotateY(180deg);border-radius:18px;background:linear-gradient(150deg,#D89548,#9C5B2E);display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-weight:600;font-size:1.5rem;color:#1A1206">KLN</div>
+        </div>
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:#8A7E6C;margin-top:6px">10</div>
+      <h3 style="font-family:'Fraunces',serif;font-weight:600;font-size:1.18rem;margin:6px 0 6px">{{f9t}}</h3>
+      <p style="margin:0;font-size:.9rem;color:#C7BBA6">{{f9d}}</p>
+    </div>
+    <div style="border:1px solid rgba(244,236,221,.12);background:rgba(30,26,22,.5);border-radius:18px;padding:20px;overflow:hidden">
+      <div style="height:170px;display:flex;align-items:center;justify-content:center"><svg id="lab-goo" width="190" height="150" style="overflow:visible"><defs><filter id="gooF"><feGaussianBlur in="SourceGraphic" stdDeviation="7" result="b"></feGaussianBlur><feColorMatrix in="b" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -9"></feColorMatrix></filter></defs><g filter="url(#gooF)" fill="#D89548"><circle class="goo" cx="95" cy="75" r="20"></circle><circle class="goo" cx="60" cy="75" r="15"></circle><circle class="goo" cx="130" cy="75" r="15"></circle></g></svg></div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:#8A7E6C;margin-top:6px">11</div>
+      <h3 style="font-family:'Fraunces',serif;font-weight:600;font-size:1.18rem;margin:6px 0 6px">{{f10t}}</h3><p style="margin:0;font-size:.9rem;color:#C7BBA6">{{f10d}}</p>
+    </div>
+
+    <div data-ripple data-cursor style="position:relative;border:1px solid rgba(244,236,221,.12);background:rgba(30,26,22,.5);border-radius:18px;padding:20px;overflow:hidden;cursor:pointer">
+      <div style="position:relative;height:170px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#C7BBA6;pointer-events:none">{{rippleLabel}}</div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:#8A7E6C;margin-top:6px">12</div>
+      <h3 style="font-family:'Fraunces',serif;font-weight:600;font-size:1.18rem;margin:6px 0 6px">{{f11t}}</h3><p style="margin:0;font-size:.9rem;color:#C7BBA6">{{f11d}}</p>
+    </div>
+
+    <div style="border:1px solid rgba(244,236,221,.12);background:rgba(30,26,22,.5);border-radius:18px;padding:20px;overflow:hidden">
+      <div style="height:170px;display:flex;align-items:center;justify-content:center"><span data-typewriter style="font-family:'JetBrains Mono',monospace;font-size:1.25rem;color:#ECB87D"></span></div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:#8A7E6C;margin-top:6px">13</div>
+      <h3 style="font-family:'Fraunces',serif;font-weight:600;font-size:1.18rem;margin:6px 0 6px">{{f12t}}</h3><p style="margin:0;font-size:.9rem;color:#C7BBA6">{{f12d}}</p>
+    </div>
+
+    <div data-cursor style="border:1px solid rgba(244,236,221,.12);background:rgba(30,26,22,.5);border-radius:18px;padding:20px;overflow:hidden">
+      <div style="height:170px;display:flex;align-items:center;justify-content:center;perspective:600px"><div style="width:78px;height:78px;position:relative;transform-style:preserve-3d;animation:labCube 9s linear infinite"><div style="position:absolute;width:78px;height:78px;background:rgba(216,149,72,.16);border:1px solid #D89548;transform:translateZ(39px)"></div><div style="position:absolute;width:78px;height:78px;background:rgba(216,149,72,.16);border:1px solid #D89548;transform:rotateY(180deg) translateZ(39px)"></div><div style="position:absolute;width:78px;height:78px;background:rgba(204,85,112,.16);border:1px solid #CC5570;transform:rotateY(90deg) translateZ(39px)"></div><div style="position:absolute;width:78px;height:78px;background:rgba(204,85,112,.16);border:1px solid #CC5570;transform:rotateY(-90deg) translateZ(39px)"></div><div style="position:absolute;width:78px;height:78px;background:rgba(127,164,106,.16);border:1px solid #7FA46A;transform:rotateX(90deg) translateZ(39px)"></div><div style="position:absolute;width:78px;height:78px;background:rgba(127,164,106,.16);border:1px solid #7FA46A;transform:rotateX(-90deg) translateZ(39px)"></div></div></div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:#8A7E6C;margin-top:6px">14</div>
+      <h3 style="font-family:'Fraunces',serif;font-weight:600;font-size:1.18rem;margin:6px 0 6px">{{f13t}}</h3><p style="margin:0;font-size:.9rem;color:#C7BBA6">{{f13d}}</p>
+    </div>
+
+    <div style="border:1px solid rgba(244,236,221,.12);background:rgba(30,26,22,.5);border-radius:18px;padding:20px;overflow:hidden">
+      <div style="height:170px;display:flex;align-items:center;justify-content:center"><button data-jelly data-cursor style="background:var(--accent,#D89548);color:#1A1206;border:none;font-weight:600;border-radius:14px;padding:15px 26px;font-size:15px;cursor:pointer">{{jellyLabel}}</button></div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:#8A7E6C;margin-top:6px">15</div>
+      <h3 style="font-family:'Fraunces',serif;font-weight:600;font-size:1.18rem;margin:6px 0 6px">{{f14t}}</h3><p style="margin:0;font-size:.9rem;color:#C7BBA6">{{f14d}}</p>
+    </div>
+
+    <div style="border:1px solid rgba(244,236,221,.12);background:rgba(30,26,22,.5);border-radius:18px;padding:20px;overflow:hidden">
+      <div style="height:170px;display:flex;align-items:flex-end;justify-content:center;gap:7px;padding-bottom:30px"><span style="width:11px;height:80px;border-radius:5px;background:linear-gradient(#ECB87D,#D89548);transform-origin:bottom;animation:labEq .8s ease-in-out infinite"></span><span style="width:11px;height:80px;border-radius:5px;background:linear-gradient(#ECB87D,#D89548);transform-origin:bottom;animation:labEq .8s ease-in-out infinite;animation-delay:-.6s"></span><span style="width:11px;height:80px;border-radius:5px;background:linear-gradient(#ECB87D,#D89548);transform-origin:bottom;animation:labEq .8s ease-in-out infinite;animation-delay:-.2s"></span><span style="width:11px;height:80px;border-radius:5px;background:linear-gradient(#ECB87D,#D89548);transform-origin:bottom;animation:labEq .8s ease-in-out infinite;animation-delay:-.9s"></span><span style="width:11px;height:80px;border-radius:5px;background:linear-gradient(#ECB87D,#D89548);transform-origin:bottom;animation:labEq .8s ease-in-out infinite;animation-delay:-.4s"></span><span style="width:11px;height:80px;border-radius:5px;background:linear-gradient(#ECB87D,#D89548);transform-origin:bottom;animation:labEq .8s ease-in-out infinite;animation-delay:-.7s"></span></div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:#8A7E6C;margin-top:6px">16</div>
+      <h3 style="font-family:'Fraunces',serif;font-weight:600;font-size:1.18rem;margin:6px 0 6px">{{f15t}}</h3><p style="margin:0;font-size:.9rem;color:#C7BBA6">{{f15d}}</p>
+    </div>
+
+    <div style="border:1px solid rgba(244,236,221,.12);background:rgba(30,26,22,.5);border-radius:18px;padding:20px;overflow:hidden">
+      <div style="height:170px;display:flex;align-items:center;justify-content:center"><svg width="130" height="130" viewBox="0 0 130 130"><circle cx="65" cy="65" r="52" fill="none" stroke="rgba(244,236,221,.12)" stroke-width="9"></circle><circle class="labRing" data-pct="86" cx="65" cy="65" r="52" fill="none" stroke="#ECB87D" stroke-width="9" stroke-linecap="round" transform="rotate(-90 65 65)" style="stroke-dasharray:1000;stroke-dashoffset:1000"></circle><text x="65" y="73" text-anchor="middle" style="font-family:'Fraunces',serif;font-size:26px;font-weight:600;fill:#F4ECDD">0%</text></svg></div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:#8A7E6C;margin-top:6px">17</div>
+      <h3 style="font-family:'Fraunces',serif;font-weight:600;font-size:1.18rem;margin:6px 0 6px">{{f16t}}</h3><p style="margin:0;font-size:.9rem;color:#C7BBA6">{{f16d}}</p>
+    </div>
+
+    <div data-parallax data-cursor style="border:1px solid rgba(244,236,221,.12);background:rgba(30,26,22,.5);border-radius:18px;padding:20px;overflow:hidden">
+      <div style="position:relative;height:170px;overflow:hidden;border-radius:12px;background:radial-gradient(circle at 50% 65%, #211a13, #0E0B09);display:flex;align-items:center;justify-content:center"><div data-depth="1" style="position:absolute;width:42px;height:42px;border-radius:50%;background:rgba(204,85,112,.5);left:26%;top:26%;transition:transform .2s ease-out"></div><div data-depth="2.4" style="position:absolute;width:58px;height:58px;border-radius:14px;background:rgba(91,140,90,.4);right:22%;top:42%;transition:transform .2s ease-out"></div><div data-depth="4" style="position:relative;font-family:'Fraunces',serif;font-size:1.7rem;color:#ECB87D;transition:transform .2s ease-out">KLN</div></div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:#8A7E6C;margin-top:6px">18</div>
+      <h3 style="font-family:'Fraunces',serif;font-weight:600;font-size:1.18rem;margin:6px 0 6px">{{f17t}}</h3><p style="margin:0;font-size:.9rem;color:#C7BBA6">{{f17d}}</p>
+    </div>
+
+    <div style="border:1px solid rgba(244,236,221,.12);background:rgba(30,26,22,.5);border-radius:18px;padding:20px;overflow:hidden">
+      <div style="height:170px;display:flex;align-items:center;justify-content:center"><svg width="170" height="120" viewBox="0 0 170 120"><path d="M15 95 C 40 20, 70 20, 85 60 C 100 100, 130 100, 155 30" fill="none" stroke="#ECB87D" stroke-width="3" stroke-linecap="round" style="stroke-dasharray:400;animation:labDraw 4.5s ease-in-out infinite"></path></svg></div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:#8A7E6C;margin-top:6px">19</div>
+      <h3 style="font-family:'Fraunces',serif;font-weight:600;font-size:1.18rem;margin:6px 0 6px">{{f18t}}</h3><p style="margin:0;font-size:.9rem;color:#C7BBA6">{{f18d}}</p>
+    </div>
+
+    <div style="border:1px solid rgba(244,236,221,.12);background:rgba(30,26,22,.5);border-radius:18px;padding:20px;overflow:hidden">
+      <div style="height:170px;display:flex;align-items:center;justify-content:center"><div style="width:108px;height:108px;background:linear-gradient(140deg,#D89548,#CC5570);box-shadow:0 14px 40px rgba(216,149,72,.25);animation:labBlob 8s ease-in-out infinite"></div></div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:#8A7E6C;margin-top:6px">20</div>
+      <h3 style="font-family:'Fraunces',serif;font-weight:600;font-size:1.18rem;margin:6px 0 6px">{{f19t}}</h3><p style="margin:0;font-size:.9rem;color:#C7BBA6">{{f19d}}</p>
+    </div>
+
+  </section>
+
+  <footer style="position:relative;z-index:2;background:#0C0907;border-top:1px solid rgba(244,236,221,.12)">
+    <div style="max-width:1180px;margin:0 auto;padding:24px 28px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:13px;color:#8A7E6C">
+      <span>© 2026 Wojciech Kłaniecki KLNTech · /lab</span>
+      <a href="KLNTech.dc.html" data-cursor style="color:#C7BBA6;text-decoration:none">{{backCta}} →</a>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { lang:'pl' };
+  C = {
+    pl:{
+      eyebrow:'Technical craft · lab', title:'Dwadzieścia efektów wow',
+      sub:'Zestaw mikro-interakcji w stylu najlepiej zaprojektowanych stron. Każda działa na żywo, bez bibliotek, i pokazuje rzemiosło frontendowe, które wkłada się w te projekty.',
+      langBtn:'EN', backCta:'Wróć do KLNTech',
+      magLabel:'Najedź', spotLabel:'Rusz kursorem', countUnit:'rycin', dragLabel:'Przeciągnij', flipFront:'Kliknij',
+      f0t:'Pochylenie 3D + refleks', f0d:'Karta reaguje na kursor w 3D, ze świetlnym odbiciem podążającym za ręką.',
+      f1t:'Magnetyczny przycisk', f1d:'Przycisk przyciągany do kursora i wracający sprężyście na miejsce.',
+      f2t:'Reflektor (spotlight)', f2d:'Światło podążające za kursorem, sterowane zmiennymi CSS w czasie rzeczywistym.',
+      f3t:'Rozszyfrowanie tekstu', f3d:'Tekst losuje znaki i układa się litera po literze przy najechaniu.',
+      f4t:'Nieskończona wstęga', f4d:'Bezszwowy, zapętlony pasek z miękkim wygaszaniem na krawędziach.',
+      f5t:'Naliczanie liczb', f5d:'Wartości animują się od zera, gdy sekcja wjeżdża w kadr.',
+      f6t:'Sieć cząstek', f6d:'Interaktywna konstelacja na canvasie, reagująca na kursor.',
+      f7t:'Pochylenie scrollem', f7d:'Elementy przechylają się w rytm prędkości przewijania i wracają do pionu.',
+      f8t:'Przeciąganie ze sprężyną', f8d:'Element z fizyką: ciągniesz, puszczasz, wraca z elastycznym odbiciem.',
+      f9t:'Obrót 3D karty', f9d:'Dwustronna karta obracająca się w przestrzeni po kliknięciu.',
+      rippleLabel:'Kliknij', jellyLabel:'Najedź',
+      f10t:'Gooey · metaballs', f10d:'Płynnie zlewające się kształty (filtr SVG goo).',
+      f11t:'Fala po kliknięciu', f11d:'Materiałowa fala rozchodząca się z punktu kliknięcia.',
+      f12t:'Maszyna do pisania', f12d:'Tekst pisany i kasowany znak po znaku, z migającym kursorem.',
+      f13t:'Obracający się sześcian 3D', f13d:'Sześcian CSS obracający się w przestrzeni, bez bibliotek.',
+      f14t:'Galaretowaty przycisk', f14d:'Sprężyste ściśnięcie i rozciągnięcie przy najechaniu.',
+      f15t:'Korektor graficzny', f15d:'Animowane słupki w rytm, jak equalizer audio.',
+      f16t:'Pierścień postępu', f16d:'Okrągły wskaźnik rysujący się i naliczający przy wejściu w kadr.',
+      f17t:'Parallax warstw', f17d:'Warstwy poruszają się z różną głębią za kursorem.',
+      f18t:'Rysowanie ścieżki SVG', f18d:'Linia rysująca i ścierająca samą siebie w pętli.',
+      f19t:'Morfująca bańka', f19d:'Organiczny kształt płynnie zmieniający kontur.'
+    },
+    en:{
+      eyebrow:'Technical craft · lab', title:'Twenty wow effects',
+      sub:'A set of micro-interactions in the spirit of the best-designed sites. Each runs live, with no libraries, and shows the frontend craft that goes into these projects.',
+      langBtn:'PL', backCta:'Back to KLNTech',
+      magLabel:'Hover me', spotLabel:'Move the cursor', countUnit:'plates', dragLabel:'Drag me', flipFront:'Click',
+      f0t:'3D tilt + glare', f0d:'A card that reacts to the cursor in 3D, with a specular highlight tracking your hand.',
+      f1t:'Magnetic button', f1d:'A button pulled toward the cursor that springs back into place.',
+      f2t:'Spotlight', f2d:'A light following the cursor, driven by CSS custom properties in real time.',
+      f3t:'Text scramble', f3d:'Text randomises characters and resolves letter by letter on hover.',
+      f4t:'Infinite marquee', f4d:'A seamless looping ticker with a soft fade at both edges.',
+      f5t:'Count-up', f5d:'Values animate from zero as the section scrolls into view.',
+      f6t:'Particle network', f6d:'An interactive constellation on canvas that reacts to the cursor.',
+      f7t:'Scroll skew', f7d:'Elements skew with scroll velocity and settle back upright.',
+      f8t:'Spring drag', f8d:'An element with physics: drag, release, and it bounces back elastically.',
+      f9t:'3D flip card', f9d:'A two-sided card that rotates in space on click.',
+      rippleLabel:'Click', jellyLabel:'Hover',
+      f10t:'Gooey · metaballs', f10d:'Shapes that merge fluidly (an SVG goo filter).',
+      f11t:'Click ripple', f11d:'A material ripple radiating from the click point.',
+      f12t:'Typewriter', f12d:'Text typed and deleted character by character, with a blinking caret.',
+      f13t:'Rotating 3D cube', f13d:'A CSS cube spinning in space, no libraries.',
+      f14t:'Jelly button', f14d:'An elastic squash and stretch on hover.',
+      f15t:'Equalizer', f15d:'Animated bars pulsing like an audio equalizer.',
+      f16t:'Progress ring', f16d:'A circular gauge that draws and counts up on scroll into view.',
+      f17t:'Parallax layers', f17d:'Layers move at different depths behind the cursor.',
+      f18t:'SVG path draw-on', f18d:'A line that draws and erases itself in a loop.',
+      f19t:'Morphing blob', f19d:'An organic shape smoothly shifting its outline.'
+    }
+  };
+
+  componentDidMount(){ this._wire(); }
+  componentDidUpdate(){ this._wire(); }
+
+  _wire(){
+    if(this._wired) return; this._wired = true;
+    const $$ = s => Array.from(document.querySelectorAll(s));
+
+    // custom cursor + glow
+    const dot=document.getElementById('lab-cursor'), glow=document.getElementById('lab-glow');
+    window.addEventListener('pointermove',(e)=>{ if(dot) dot.style.transform='translate('+e.clientX+'px,'+e.clientY+'px)'; if(glow) glow.style.transform='translate('+e.clientX+'px,'+e.clientY+'px)'; },{passive:true});
+    $$('[data-cursor]').forEach(el=>{ el.addEventListener('pointerenter',()=>{ if(dot) dot.style.scale='2.3'; }); el.addEventListener('pointerleave',()=>{ if(dot) dot.style.scale='1'; }); });
+
+    // 3D tilt + glare
+    $$('[data-tilt3d]').forEach(c=>{ const g=c.querySelector('[data-glare]');
+      c.addEventListener('pointermove',e=>{ const r=c.getBoundingClientRect(); const px=(e.clientX-r.left)/r.width, py=(e.clientY-r.top)/r.height;
+        c.style.transform='perspective(700px) rotateY('+((px-.5)*20)+'deg) rotateX('+(-(py-.5)*20)+'deg) scale(1.05)';
+        if(g) g.style.background='radial-gradient(circle at '+(px*100)+'% '+(py*100)+'%, rgba(255,255,255,.45), transparent 55%)'; });
+      c.addEventListener('pointerleave',()=>{ c.style.transform=''; if(g) g.style.background='none'; }); });
+
+    // magnetic
+    $$('[data-magnetic]').forEach(b=>{ const p=b.closest('[data-magzone]')||b.parentElement;
+      p.addEventListener('pointermove',e=>{ const r=p.getBoundingClientRect(); const x=e.clientX-r.left-r.width/2, y=e.clientY-r.top-r.height/2; b.style.transform='translate('+x*0.4+'px,'+y*0.4+'px)'; });
+      p.addEventListener('pointerleave',()=>{ b.style.transform=''; }); });
+
+    // spotlight
+    $$('[data-spotlight]').forEach(c=>{ c.addEventListener('pointermove',e=>{ const r=c.getBoundingClientRect(); c.style.setProperty('--mx',(e.clientX-r.left)+'px'); c.style.setProperty('--my',(e.clientY-r.top)+'px'); }); });
+
+    // text scramble
+    const glyphs='ABCDEFGHIJKLMNOPQRSTUVWXYZ#%&$@0123456789';
+    $$('[data-scramble]').forEach(el=>{ const final=el.dataset.scramble;
+      el.addEventListener('pointerenter',()=>{ let frame=0; clearInterval(el._iv);
+        el._iv=setInterval(()=>{ frame++; el.textContent=final.split('').map((ch,i)=> i < frame/2 ? ch : glyphs[Math.floor(Math.random()*glyphs.length)]).join(''); if(frame/2>=final.length){ clearInterval(el._iv); el.textContent=final; } },30); }); });
+
+    // count-up
+    if(!this._co){ this._co=new IntersectionObserver((ents)=>{ ents.forEach(en=>{ if(en.isIntersecting && !en.target._done){ en.target._done=true; const tg=parseInt(en.target.dataset.count,10)||0, dur=1400, st=performance.now();
+      const tick=now=>{ const p=Math.min(1,(now-st)/dur); en.target.textContent=Math.round(tg*(1-Math.pow(1-p,3))); if(p<1) requestAnimationFrame(tick); }; requestAnimationFrame(tick); } }); },{threshold:.5}); }
+    $$('.labCount').forEach(el=>this._co.observe(el));
+
+    // constellation canvas
+    const cv=document.getElementById('lab-net');
+    if(cv){ const ctx=cv.getContext('2d'); const DPR=Math.min(2,window.devicePixelRatio||1); let w=1,h=1;
+      const resize=()=>{ const r=cv.getBoundingClientRect(); w=cv.width=Math.max(1,r.width*DPR); h=cv.height=Math.max(1,r.height*DPR); };
+      resize(); const N=42; const pts=[...Array(N)].map(()=>({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.35*DPR,vy:(Math.random()-.5)*.35*DPR}));
+      let mx=-1e4,my=-1e4; cv.addEventListener('pointermove',e=>{ const r=cv.getBoundingClientRect(); mx=(e.clientX-r.left)*DPR; my=(e.clientY-r.top)*DPR; }); cv.addEventListener('pointerleave',()=>{ mx=my=-1e4; });
+      const loop=()=>{ ctx.clearRect(0,0,w,h);
+        for(const p of pts){ p.x+=p.vx; p.y+=p.vy; if(p.x<0||p.x>w)p.vx*=-1; if(p.y<0||p.y>h)p.vy*=-1; const dx=p.x-mx,dy=p.y-my,d=Math.hypot(dx,dy); if(d<90*DPR&&d>0){ p.x+=dx/d*1.4; p.y+=dy/d*1.4; } }
+        for(let i=0;i<N;i++){ for(let j=i+1;j<N;j++){ const a=pts[i],b=pts[j],dd=Math.hypot(a.x-b.x,a.y-b.y); if(dd<86*DPR){ ctx.strokeStyle='rgba(216,149,72,'+(1-dd/(86*DPR))*0.5+')'; ctx.lineWidth=DPR; ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke(); } } }
+        for(const p of pts){ ctx.fillStyle='#ECB87D'; ctx.beginPath(); ctx.arc(p.x,p.y,1.6*DPR,0,7); ctx.fill(); }
+        this._netRAF=requestAnimationFrame(loop); };
+      loop(); window.addEventListener('resize',resize); }
+
+    // scroll skew (with easing back to 0)
+    const skews=$$('[data-skew]'); if(skews.length){ let last=null, target=0, cur=0;
+      const onScroll=()=>{ const y=window.scrollY||(document.scrollingElement?document.scrollingElement.scrollTop:0); if(last===null)last=y; target=Math.max(-10,Math.min(10,(y-last)*0.5)); last=y; };
+      window.addEventListener('scroll',onScroll,{passive:true,capture:true}); document.addEventListener('scroll',onScroll,{passive:true,capture:true});
+      const ease=()=>{ cur+=(target-cur)*0.18; target+=(0-target)*0.12; skews.forEach(el=>el.style.transform='skewY('+cur.toFixed(2)+'deg)'); requestAnimationFrame(ease); }; ease(); }
+
+    // spring drag
+    $$('[data-drag]').forEach(el=>{ let on=false,sx=0,sy=0;
+      el.addEventListener('pointerdown',e=>{ on=true; sx=e.clientX; sy=e.clientY; el.style.transition='none'; el.style.cursor='grabbing'; try{el.setPointerCapture(e.pointerId);}catch(_){} });
+      el.addEventListener('pointermove',e=>{ if(!on)return; const x=e.clientX-sx, y=e.clientY-sy; el.style.transform='translate('+x+'px,'+y+'px) rotate('+(x*0.06)+'deg)'; });
+      const up=()=>{ if(!on)return; on=false; el.style.cursor='grab'; el.style.transition='transform .8s cubic-bezier(.2,1.4,.35,1)'; el.style.transform=''; };
+      el.addEventListener('pointerup',up); el.addEventListener('pointercancel',up); });
+
+    // flip
+    $$('[data-flip]').forEach(c=>{ c.addEventListener('click',()=>{ c._f=!c._f; c.style.transform=c._f?'rotateY(180deg)':'rotateY(0deg)'; }); });
+    // gooey metaballs
+    const goo=document.getElementById('lab-goo'); if(goo){ const cs=goo.querySelectorAll('.goo'); let tt=0; const ga=()=>{ tt+=0.018; cs.forEach((c,i)=>{ const a=tt+i*2.1; c.setAttribute('cx', 95+Math.cos(a)*(8+i*16)); c.setAttribute('cy', 75+Math.sin(a*1.3)*(10+i*10)); }); requestAnimationFrame(ga); }; ga(); }
+    // click ripple
+    $$('[data-ripple]').forEach(z=>{ z.addEventListener('click',e=>{ const r=z.getBoundingClientRect(); const s=document.createElement('span'); s.style.cssText='position:absolute;left:'+(e.clientX-r.left)+'px;top:'+(e.clientY-r.top)+'px;width:10px;height:10px;border-radius:50%;background:rgba(216,149,72,.45);transform:translate(-50%,-50%);pointer-events:none'; z.appendChild(s); s.animate([{width:'10px',height:'10px',opacity:.6},{width:'360px',height:'360px',opacity:0}],{duration:750,easing:'ease-out'}).onfinish=()=>s.remove(); }); });
+    // typewriter
+    $$('[data-typewriter]').forEach(el=>{ const ph=['feature-developer','test-writer','code-reviewer','deep-review']; let pi=0,ci=0,del=false; const tw=()=>{ const w=ph[pi]; el.innerHTML=w.slice(0,ci)+'<span style="animation:labCaret 1s step-end infinite">▋</span>'; if(!del){ ci++; if(ci>w.length){ del=true; return setTimeout(tw,1000);} } else { ci--; if(ci<0){ del=false; pi=(pi+1)%ph.length; ci=0; } } setTimeout(tw, del?45:95); }; tw(); });
+    // jelly
+    $$('[data-jelly]').forEach(b=>{ b.addEventListener('pointerenter',()=>{ b.animate([{transform:'scale(1,1)'},{transform:'scale(1.25,.75)'},{transform:'scale(.85,1.18)'},{transform:'scale(1.05,.95)'},{transform:'scale(1,1)'}],{duration:600,easing:'ease-out'}); }); });
+    // progress ring
+    if(!this._ringObs){ this._ringObs=new IntersectionObserver(es=>{ es.forEach(en=>{ if(en.isIntersecting && !en.target._d){ en.target._d=true; const el=en.target, pct=+el.dataset.pct, CC=2*Math.PI*52; el.style.strokeDasharray=CC; const st=performance.now(), tx=el.parentNode.querySelector('text'); const tk=n=>{ const p=Math.min(1,(n-st)/1300), e=1-Math.pow(1-p,3); el.style.strokeDashoffset=CC*(1-e*pct/100); if(tx) tx.textContent=Math.round(e*pct)+'%'; if(p<1) requestAnimationFrame(tk); }; requestAnimationFrame(tk); } }); },{threshold:.5}); }
+    $$('.labRing').forEach(el=>this._ringObs.observe(el));
+    // parallax layers
+    $$('[data-parallax]').forEach(z=>{ const ls=z.querySelectorAll('[data-depth]'); z.addEventListener('pointermove',e=>{ const r=z.getBoundingClientRect(); const x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5; ls.forEach(l=>{ const d=+l.dataset.depth; l.style.transform='translate('+(x*d*16)+'px,'+(y*d*16)+'px)'; }); }); z.addEventListener('pointerleave',()=>ls.forEach(l=>l.style.transform='')); });
+  }
+
+  renderVals(){
+    const t=this.C[this.state.lang];
+    return Object.assign({}, t, { toggleLang:()=>this.setState(s=>({lang:s.lang==='pl'?'en':'pl'})) });
+  }
+}
+</script>
+</body>
+</html>
